@@ -353,20 +353,20 @@
 		<div class="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
 			<!-- Scenario Cards -->
 			{#each [
-				{ num: '01', name: 'No Security', desc: 'RLS Disabled', icon: '○', color: 'breach' },
-				{ num: '02', name: 'Bad RLS', desc: 'USING (true)', icon: '×', color: 'breach' },
-				{ num: '03', name: 'Business Logic', desc: 'Price & IDOR', icon: '$', color: 'breach' },
-				{ num: '04', name: 'Vibecoder', desc: 'AI Mistakes', icon: '◇', color: 'supa' },
-				{ num: '05', name: 'Injection', desc: 'SQL & XSS', icon: '▸', color: 'breach' },
-				{ num: '06', name: 'GraphQL/Vault', desc: 'Secrets', icon: '◈', color: 'breach' },
-				{ num: '07', name: 'Auth/Tenant', desc: 'Multi-tenant', icon: '⊡', color: 'breach' },
-				{ num: '08', name: 'Database', desc: 'Deep Access', icon: '▤', color: 'breach' },
-				{ num: '09', name: 'AI/Realtime', desc: 'ML & WS', icon: '◎', color: 'supa' },
-				{ num: '10', name: 'Backup/Logs', desc: 'Operations', icon: '▢', color: 'breach' },
+				{ num: '01', name: 'No Security', desc: 'RLS Disabled', icon: '--', color: 'breach' },
+				{ num: '02', name: 'Bad RLS', desc: 'USING (true)', icon: '!!', color: 'breach' },
+				{ num: '03', name: 'Business Logic', desc: 'Price & IDOR', icon: '$$', color: 'breach' },
+				{ num: '04', name: 'Vibecoder', desc: 'AI Mistakes', icon: '<>', color: 'supa' },
+				{ num: '05', name: 'Injection', desc: 'SQL & XSS', icon: ';--', color: 'breach' },
+				{ num: '06', name: 'GraphQL/Vault', desc: 'Secrets', icon: '{}', color: 'breach' },
+				{ num: '07', name: 'Auth/Tenant', desc: 'Multi-tenant', icon: '@', color: 'breach' },
+				{ num: '08', name: 'Database', desc: 'Deep Access', icon: '[DB]', color: 'breach' },
+				{ num: '09', name: 'AI/Realtime', desc: 'ML & WS', icon: '~/', color: 'supa' },
+				{ num: '10', name: 'Backup/Logs', desc: 'Operations', icon: '>>', color: 'breach' },
 			] as scenario}
 				<div class="group bg-surface-900 border border-gray-800 hover:border-{scenario.color}-500 p-4 transition-all hover:shadow-lg hover:shadow-{scenario.color}-500/20 cursor-pointer">
 					<div class="flex items-start justify-between mb-2">
-						<span class="text-2xl font-light text-gray-500 group-hover:text-{scenario.color}-400 transition-colors">{scenario.icon}</span>
+						<span class="text-lg font-mono text-gray-500 group-hover:text-{scenario.color}-400 transition-colors">{scenario.icon}</span>
 						<span class="text-xs font-mono text-gray-600 group-hover:text-{scenario.color}-400">{scenario.num}</span>
 					</div>
 					<h3 class="font-bold text-white group-hover:text-{scenario.color}-400 transition-colors">{scenario.name}</h3>
