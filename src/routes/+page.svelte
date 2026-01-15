@@ -171,28 +171,45 @@
 						scanProgress = Math.round((attacksCompleted / totalAttacks) * 100);
 
 						if (result.breached) {
+							// Update breach count immediately for real-time display
+							breachCount++;
+							attacksFound = breachCount;
 							currentAttack = `BREACHED: ${attack.name}`;
 							terminalLines = [...terminalLines, {
 								text: `× BREACHED: ${attack.name} [${attack.severity.toUpperCase()}]`,
 								type: 'breach'
 							}];
+							// Update breach arrays for UI and copy feature
+							recentBreaches = [...recentBreaches.slice(-4), {
+								title: attack.name,
+								severity: attack.severity,
+								category: attack.category
+							}];
+							allBreaches = [...allBreaches, {
+								title: attack.name,
+								severity: attack.severity,
+								category: attack.category
+							}];
 						}
 					},
 					onVulnerabilityFound: (vuln) => {
-						breachCount++;
-						attacksFound = breachCount;
-						// Keep last 5 for terminal display
-						recentBreaches = [...recentBreaches.slice(-4), {
-							title: vuln.title,
-							severity: vuln.severity,
-							category: vuln.category
-						}];
-						// Store ALL breaches for copy feature
-						allBreaches = [...allBreaches, {
-							title: vuln.title,
-							severity: vuln.severity,
-							category: vuln.category
-						}];
+						// This callback may fire separately - only update if not already counted
+						// Check if this vulnerability was already added in onAttackComplete
+						const alreadyAdded = allBreaches.some(b => b.title === vuln.title);
+						if (!alreadyAdded) {
+							breachCount++;
+							attacksFound = breachCount;
+							recentBreaches = [...recentBreaches.slice(-4), {
+								title: vuln.title,
+								severity: vuln.severity,
+								category: vuln.category
+							}];
+							allBreaches = [...allBreaches, {
+								title: vuln.title,
+								severity: vuln.severity,
+								category: vuln.category
+							}];
+						}
 					},
 					onProgress: (done, total) => {
 						attacksCompleted = done;
