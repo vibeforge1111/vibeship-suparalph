@@ -14,6 +14,7 @@
 	let scanComplete = $state(false);
 	let scanError = $state('');
 	let recentBreaches = $state<{title: string; severity: string; category: string}[]>([]);
+	let allBreaches = $state<{title: string; severity: string; category: string}[]>([]); // All breaches for copy feature
 	let scanDuration = $state(0);
 
 	// Animate in content after ralph appears
@@ -91,6 +92,12 @@
 					severity: attack.severity,
 					category: attack.category
 				}];
+				// Store ALL breaches for copy feature
+				allBreaches = [...allBreaches, {
+					title: attack.name,
+					severity: attack.severity,
+					category: attack.category
+				}];
 			} else {
 				terminalLines = [...terminalLines, { text: `  ✓ Secure: ${attack.name}`, type: 'success' }];
 			}
@@ -118,6 +125,7 @@
 		scanComplete = false;
 		scanError = '';
 		recentBreaches = [];
+		allBreaches = [];
 
 		// Check for demo mode
 		if (scanUrl.toLowerCase() === 'demo' || scanUrl.toLowerCase().includes('demo.supabase')) {
@@ -173,7 +181,14 @@
 					onVulnerabilityFound: (vuln) => {
 						breachCount++;
 						attacksFound = breachCount;
+						// Keep last 5 for terminal display
 						recentBreaches = [...recentBreaches.slice(-4), {
+							title: vuln.title,
+							severity: vuln.severity,
+							category: vuln.category
+						}];
+						// Store ALL breaches for copy feature
+						allBreaches = [...allBreaches, {
 							title: vuln.title,
 							severity: vuln.severity,
 							category: vuln.category
@@ -657,12 +672,12 @@
 			<div class="flex flex-wrap gap-4">
 				<button
 					onclick={() => {
-						const findings = recentBreaches.map((b, i) =>
+						const findings = allBreaches.map((b, i) =>
 							`${i + 1}. [${b.severity.toUpperCase()}] ${b.title} (Category: ${b.category})`
 						).join('\n');
-						const text = `I ran a security scan on my Supabase project and found ${attacksFound} vulnerabilities:\n\n${findings}\n\nPlease help me fix these security issues. Show me the SQL to:\n1. Enable proper RLS policies\n2. Fix any unsafe configurations\n3. Secure my database`;
+						const text = `I ran a security scan on my Supabase project and found ${allBreaches.length} vulnerabilities:\n\n${findings}\n\nPlease help me fix these security issues. Show me the SQL to:\n1. Enable proper RLS policies\n2. Fix any unsafe configurations\n3. Secure my database`;
 						navigator.clipboard.writeText(text);
-						alert('Copied! Now paste this in Supabase SQL Editor AI');
+						alert(`Copied ${allBreaches.length} findings! Now paste this in Supabase SQL Editor AI`);
 					}}
 					class="px-6 py-3 bg-supa-600 hover:bg-supa-500 text-white font-bold transition-all hover:shadow-lg hover:shadow-supa-500/30 flex items-center gap-2"
 				>
