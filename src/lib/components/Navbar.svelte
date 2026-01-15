@@ -1,12 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { projectStore } from '$lib/stores/project.svelte';
-
-	const navItems = [
-		{ href: '/', label: 'Home' },
-		{ href: '/dashboard', label: 'Dashboard' },
-		{ href: '/settings', label: 'Settings' }
-	];
+	import { getTotalAttackCount } from '$lib/engine/attacks';
 </script>
 
 <nav class="border-b border-gray-800 bg-gray-900/50 backdrop-blur-sm sticky top-0 z-40">
@@ -20,30 +14,27 @@
 
 			<!-- Nav Links -->
 			<div class="flex items-center gap-6">
-				{#each navItems as item}
-					<a
-						href={item.href}
-						class="text-sm font-medium transition-colors {$page.url.pathname === item.href
-							? 'text-breach-400'
-							: 'text-gray-400 hover:text-white'}"
-					>
-						{item.label}
-					</a>
-				{/each}
+				<a
+					href="/"
+					class="text-sm font-medium transition-colors {$page.url.pathname === '/'
+						? 'text-breach-400'
+						: 'text-gray-400 hover:text-white'}"
+				>
+					Scanner
+				</a>
+				<a
+					href="https://github.com/vibeforge1111/vibeship-supascanner"
+					target="_blank"
+					class="text-sm font-medium text-gray-400 hover:text-white transition-colors"
+				>
+					GitHub
+				</a>
 			</div>
 
-			<!-- Active Project Indicator -->
-			<div class="flex items-center gap-3">
-				{#if projectStore.activeProject}
-					<div class="flex items-center gap-2 text-sm">
-						<span class="w-2 h-2 bg-secure-500 rounded-full"></span>
-						<span class="text-gray-400 truncate max-w-32">{projectStore.activeProject.name}</span>
-					</div>
-				{:else}
-					<a href="/settings" class="text-sm text-breach-400 hover:text-breach-300">
-						Connect Project →
-					</a>
-				{/if}
+			<!-- Attack Count Badge -->
+			<div class="flex items-center gap-2 text-sm">
+				<span class="text-supa-400 font-mono">{getTotalAttackCount()}</span>
+				<span class="text-gray-500">attacks</span>
 			</div>
 		</div>
 	</div>

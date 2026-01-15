@@ -1,7 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import { page } from '$app/stores';
-	import { projectStore } from '$lib/stores/project.svelte';
+	import { getTotalAttackCount } from '$lib/engine/attacks';
 
 	let { children } = $props();
 
@@ -22,42 +22,23 @@
 				</a>
 				<nav class="flex items-center gap-6">
 					<a
-						href="/dashboard"
-						class="transition-colors text-sm {$page.url.pathname === '/dashboard'
-							? 'text-supa-400'
-							: 'text-gray-400 hover:text-white'}"
+						href="/"
+						class="transition-colors text-sm text-gray-400 hover:text-white"
 					>
-						Dashboard
+						Scanner
 					</a>
 					<a
-						href="/attacks"
-						class="transition-colors text-sm {$page.url.pathname === '/attacks'
-							? 'text-supa-400'
-							: 'text-gray-400 hover:text-white'}"
+						href="https://github.com/vibeforge1111/vibeship-supascanner"
+						target="_blank"
+						class="transition-colors text-sm text-gray-400 hover:text-white"
 					>
-						Attacks
-					</a>
-					<a
-						href="/settings"
-						class="transition-colors text-sm {$page.url.pathname === '/settings'
-							? 'text-supa-400'
-							: 'text-gray-400 hover:text-white'}"
-					>
-						Settings
+						GitHub
 					</a>
 				</nav>
-				<!-- Active Project Indicator -->
-				<div class="flex items-center gap-3">
-					{#if projectStore.activeProject}
-						<div class="flex items-center gap-2 text-sm">
-							<span class="w-2 h-2 bg-supa-500 animate-pulse"></span>
-							<span class="text-gray-400 truncate max-w-32">{projectStore.activeProject.name}</span>
-						</div>
-					{:else}
-						<a href="/settings" class="text-sm text-supa-400 hover:text-supa-300 transition-colors">
-							Connect Project →
-						</a>
-					{/if}
+				<!-- Attack Count -->
+				<div class="flex items-center gap-2 text-sm">
+					<span class="text-supa-400 font-mono">{getTotalAttackCount()}</span>
+					<span class="text-gray-500">attacks</span>
 				</div>
 			</div>
 		</header>
