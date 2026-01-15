@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { BreachEngine } from '$lib/engine/breach-engine';
+	import { ALL_ATTACKS, getTotalAttackCount } from '$lib/engine/attacks';
+
 	let showContent = $state(false);
 	let scanUrl = $state('');
 	let anonKey = $state('');
@@ -6,11 +9,12 @@
 	let scanProgress = $state(0);
 	let attacksFound = $state(0);
 	let attacksCompleted = $state(0);
-	let totalAttacks = $state(277);
+	let totalAttacks = $state(getTotalAttackCount());
 	let currentAttack = $state('');
 	let scanComplete = $state(false);
 	let scanError = $state('');
 	let recentBreaches = $state<{title: string; severity: string; category: string}[]>([]);
+	let scanDuration = $state(0);
 
 	// Animate in content after ralph appears
 	$effect(() => {
@@ -102,7 +106,7 @@
 		scanComplete = true;
 	}
 
-	// Scroll to terminal and start scan
+	// Scroll to terminal and start scan - CLIENT-SIDE EXECUTION
 	async function startScan() {
 		if (!scanUrl) return;
 
@@ -122,11 +126,14 @@
 			return;
 		}
 
+		// Update total attacks from actual attack count
+		totalAttacks = getTotalAttackCount();
+
 		terminalLines = [
 			{ text: `$ suparalph scan ${scanUrl}`, type: 'command' },
 			{ text: 'Initializing SupaRalph v1.0.0...', type: 'info' },
-			{ text: 'Loading 277 attack vectors...', type: 'info' },
-			{ text: '> Starting breach test...', type: 'warning' }
+			{ text: `Loading ${totalAttacks} attack vectors...`, type: 'info' },
+			{ text: '> Starting breach test (client-side)...', type: 'warning' }
 		];
 
 		// Scroll to terminal section
@@ -134,81 +141,74 @@
 			document.getElementById('terminal-section')?.scrollIntoView({ behavior: 'smooth' });
 		}, 100);
 
+		const startTime = Date.now();
+		let breachCount = 0;
+
 		try {
-			// Use SSE for real-time progress
-			const eventSource = new EventSource(
-				`/api/scan?targetUrl=${encodeURIComponent(scanUrl)}&anonKey=${encodeURIComponent(anonKey)}`
+			// Run BreachEngine directly in the browser - no server timeout issues!
+			const engine = new BreachEngine(
+				{
+					concurrency: 3,
+					attackTimeout: 10000,
+					delayBetweenAttacks: 50,
+					stopOnBreach: false
+				},
+				{
+					onAttackStart: (attack) => {
+						currentAttack = `${attack.category.toUpperCase()}: ${attack.name}`;
+						terminalLines = [...terminalLines, { text: `> Testing: ${attack.name}...`, type: 'info' }];
+					},
+					onAttackComplete: (attack, result) => {
+						attacksCompleted++;
+						scanProgress = Math.round((attacksCompleted / totalAttacks) * 100);
+
+						if (result.breached) {
+							currentAttack = `BREACHED: ${attack.name}`;
+							terminalLines = [...terminalLines, {
+								text: `× BREACHED: ${attack.name} [${attack.severity.toUpperCase()}]`,
+								type: 'breach'
+							}];
+						}
+					},
+					onVulnerabilityFound: (vuln) => {
+						breachCount++;
+						attacksFound = breachCount;
+						recentBreaches = [...recentBreaches.slice(-4), {
+							title: vuln.title,
+							severity: vuln.severity,
+							category: vuln.category
+						}];
+					},
+					onProgress: (done, total) => {
+						attacksCompleted = done;
+						scanProgress = Math.round((done / total) * 100);
+					}
+				}
 			);
 
-			eventSource.addEventListener('scan_start', (e) => {
-				const data = JSON.parse(e.data);
-				totalAttacks = data.total;
-				currentAttack = `Starting scan against ${data.targetUrl}...`;
-				terminalLines = [...terminalLines, { text: `Connected to ${data.targetUrl}`, type: 'success' }];
+			// Add connected message
+			terminalLines = [...terminalLines, { text: `Connected to ${scanUrl}`, type: 'success' }];
+
+			// Run all attacks directly from browser
+			const report = await engine.run(ALL_ATTACKS, {
+				targetUrl: scanUrl,
+				anonKey: anonKey || '',
+				serviceKey: ''
 			});
 
-			eventSource.addEventListener('attack_start', (e) => {
-				const data = JSON.parse(e.data);
-				currentAttack = `${data.category.toUpperCase()}: ${data.name}`;
-				terminalLines = [...terminalLines, { text: `> Testing: ${data.name}...`, type: 'info' }];
-			});
-
-			eventSource.addEventListener('attack_complete', (e) => {
-				const data = JSON.parse(e.data);
-				attacksCompleted = data.completed;
-				scanProgress = data.progress;
-				if (data.breached) {
-					currentAttack = `BREACHED: ${data.name}`;
-				}
-			});
-
-			eventSource.addEventListener('breach_found', (e) => {
-				const data = JSON.parse(e.data);
-				attacksFound = data.totalBreaches;
-				recentBreaches = [...recentBreaches.slice(-4), {
-					title: data.title,
-					severity: data.severity,
-					category: data.category
-				}];
-				terminalLines = [...terminalLines, { text: `× BREACHED: ${data.title}`, type: 'breach' }];
-			});
-
-			eventSource.addEventListener('progress', (e) => {
-				const data = JSON.parse(e.data);
-				scanProgress = data.percent;
-				attacksCompleted = data.completed;
-			});
-
-			eventSource.addEventListener('scan_complete', (e) => {
-				const data = JSON.parse(e.data);
-				scanComplete = true;
-				currentAttack = `Scan complete! Found ${data.vulnerabilities} vulnerabilities`;
-				terminalLines = [...terminalLines,
-					{ text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', type: 'info' },
-					{ text: `[!] SCAN COMPLETE: ${data.vulnerabilities} vulnerabilities found`, type: data.vulnerabilities > 0 ? 'breach' : 'success' },
-					{ text: `Detection Rate: 100% | Time: ${(data.duration / 1000).toFixed(1)}s`, type: 'info' }
-				];
-				eventSource.close();
-			});
-
-			eventSource.addEventListener('error', (e) => {
-				if (e.data) {
-					const data = JSON.parse(e.data);
-					scanError = data.message;
-					terminalLines = [...terminalLines, { text: `ERROR: ${data.message}`, type: 'error' }];
-				}
-				eventSource.close();
-			});
-
-			eventSource.onerror = () => {
-				if (!scanComplete) {
-					scanError = 'Connection lost. The scan may still be running.';
-					terminalLines = [...terminalLines, { text: 'ERROR: Connection lost', type: 'error' }];
-				}
-				eventSource.close();
-			};
+			// Scan complete
+			const duration = Date.now() - startTime;
+			scanComplete = true;
+			scanDuration = duration;
+			currentAttack = `Scan complete! Found ${report.vulnerabilities.length} vulnerabilities`;
+			terminalLines = [...terminalLines,
+				{ text: '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━', type: 'info' },
+				{ text: `[!] SCAN COMPLETE: ${report.vulnerabilities.length} vulnerabilities found`, type: report.vulnerabilities.length > 0 ? 'breach' : 'success' },
+				{ text: `Detection Rate: 100% | Time: ${(duration / 1000).toFixed(1)}s`, type: 'info' }
+			];
 		} catch (error) {
-			scanError = error instanceof Error ? error.message : 'Failed to start scan';
+			scanError = error instanceof Error ? error.message : 'Failed to run scan';
+			terminalLines = [...terminalLines, { text: `ERROR: ${scanError}`, type: 'error' }];
 			isScanning = false;
 		}
 	}
