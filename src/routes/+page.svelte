@@ -129,180 +129,74 @@
 <!-- Hero Section with Ralph Wiggum -->
 <div class="relative min-h-screen bg-surface-900 overflow-hidden">
 	<!-- Animated Background Grid - Supabase Green -->
-	<div class="absolute inset-0 opacity-30">
-		<div class="absolute inset-0" style="background-image: linear-gradient(rgba(62, 207, 142, 0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(62, 207, 142, 0.15) 1px, transparent 1px); background-size: 50px 50px;"></div>
+	<div class="absolute inset-0 opacity-20">
+		<div class="absolute inset-0" style="background-image: linear-gradient(rgba(62, 207, 142, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(62, 207, 142, 0.1) 1px, transparent 1px); background-size: 50px 50px;"></div>
 	</div>
 
 	<!-- ============================================== -->
 	<!-- MOVIE-STYLE SECURITY LASER GRID               -->
 	<!-- ============================================== -->
 
-	<!-- PULSING GRID INTERSECTION NODES -->
-	<div class="absolute inset-0 pointer-events-none">
-		{#each Array(12) as _, i}
-			<div
-				class="absolute w-2 h-2 bg-supa-400 animate-pulse shadow-lg shadow-supa-400/80"
-				style="left: {10 + (i % 4) * 30}%; top: {15 + Math.floor(i / 4) * 35}%; animation-delay: {i * 0.2}s;"
-			></div>
-		{/each}
-		{#each Array(8) as _, i}
-			<div
-				class="absolute w-1.5 h-1.5 bg-breach-500 animate-pulse shadow-lg shadow-breach-500/80"
-				style="left: {20 + (i % 4) * 20}%; top: {25 + Math.floor(i / 2) * 30}%; animation-delay: {i * 0.3}s;"
-			></div>
-		{/each}
-	</div>
-
-	<!-- RADAR SWEEP EFFECT - Top Left Corner -->
-	<div class="absolute top-10 left-10 w-40 h-40 pointer-events-none opacity-40">
-		<div class="absolute inset-0 border border-supa-500/30"></div>
-		<div class="absolute inset-4 border border-supa-500/20"></div>
-		<div class="absolute inset-8 border border-supa-500/10"></div>
-		<div class="absolute top-1/2 left-1/2 w-1/2 h-[1px] bg-gradient-to-r from-supa-400 to-transparent origin-left animate-spin" style="animation-duration: 3s;"></div>
-		<div class="absolute top-1/2 left-1/2 w-1 h-1 bg-supa-400 -translate-x-1/2 -translate-y-1/2 shadow-lg shadow-supa-400"></div>
-	</div>
-
-	<!-- RADAR SWEEP EFFECT - Bottom Right Corner -->
-	<div class="absolute bottom-10 right-10 w-40 h-40 pointer-events-none opacity-40">
-		<div class="absolute inset-0 border border-breach-500/30"></div>
-		<div class="absolute inset-4 border border-breach-500/20"></div>
-		<div class="absolute inset-8 border border-breach-500/10"></div>
-		<div class="absolute top-1/2 left-1/2 w-1/2 h-[1px] bg-gradient-to-r from-breach-500 to-transparent origin-left animate-spin" style="animation-duration: 4s; animation-direction: reverse;"></div>
-		<div class="absolute top-1/2 left-1/2 w-1 h-1 bg-breach-500 -translate-x-1/2 -translate-y-1/2 shadow-lg shadow-breach-500"></div>
-	</div>
-
-	<!-- TARGETING BRACKETS - Top Right -->
-	<div class="absolute top-20 right-20 w-24 h-24 pointer-events-none opacity-50 animate-pulse">
-		<div class="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-supa-400"></div>
-		<div class="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-supa-400"></div>
-		<div class="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-supa-400"></div>
-		<div class="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-supa-400"></div>
-		<div class="absolute top-1/2 left-0 w-full h-[1px] bg-supa-400/30"></div>
-		<div class="absolute top-0 left-1/2 w-[1px] h-full bg-supa-400/30"></div>
-	</div>
-
-	<!-- TARGETING BRACKETS - Bottom Left -->
-	<div class="absolute bottom-32 left-20 w-20 h-20 pointer-events-none opacity-40 animate-pulse" style="animation-delay: 1s;">
-		<div class="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-breach-500"></div>
-		<div class="absolute top-0 right-0 w-5 h-5 border-t-2 border-r-2 border-breach-500"></div>
-		<div class="absolute bottom-0 left-0 w-5 h-5 border-b-2 border-l-2 border-breach-500"></div>
-		<div class="absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 border-breach-500"></div>
-	</div>
-
-	<!-- FLOATING SECURITY PARTICLES -->
-	<div class="absolute inset-0 pointer-events-none overflow-hidden">
-		{#each [
-			{x: 5, y: 12, d: 3.2}, {x: 15, y: 45, d: 4.1}, {x: 25, y: 78, d: 3.8}, {x: 35, y: 23, d: 5.2},
-			{x: 45, y: 67, d: 4.5}, {x: 55, y: 34, d: 3.5}, {x: 65, y: 89, d: 4.8}, {x: 75, y: 15, d: 3.9},
-			{x: 85, y: 56, d: 5.1}, {x: 95, y: 82, d: 4.3}, {x: 8, y: 38, d: 3.7}, {x: 22, y: 91, d: 4.6},
-			{x: 38, y: 52, d: 5.0}, {x: 52, y: 8, d: 3.4}, {x: 68, y: 42, d: 4.2}, {x: 82, y: 71, d: 3.6},
-			{x: 12, y: 63, d: 4.9}, {x: 42, y: 95, d: 3.3}, {x: 72, y: 28, d: 4.7}, {x: 92, y: 48, d: 5.3}
-		] as p, i}
-			<div
-				class="absolute w-1 h-1 {i % 2 === 0 ? 'bg-supa-400' : 'bg-breach-500'} opacity-60"
-				style="left: {p.x}%; top: {p.y}%; animation: float {p.d}s ease-in-out infinite; animation-delay: {i * 0.15}s;"
-			></div>
-		{/each}
-	</div>
-
 	<!-- DIAGONAL LASER BEAMS - Like heist movie security -->
 	<!-- Green lasers from top-left to bottom-right -->
 	<div class="absolute inset-0 pointer-events-none overflow-hidden">
-		<div class="absolute top-0 left-[10%] w-[2px] h-[200vh] bg-gradient-to-b from-supa-400/90 via-supa-400/50 to-transparent rotate-[30deg] origin-top animate-laser-beam-1 shadow-[0_0_15px_rgba(62,207,142,0.7)]"></div>
+		<div class="absolute top-0 left-[10%] w-[1px] h-[200vh] bg-gradient-to-b from-supa-400/80 via-supa-400/40 to-transparent rotate-[30deg] origin-top animate-laser-beam-1 shadow-[0_0_10px_rgba(62,207,142,0.5)]"></div>
 	</div>
 	<div class="absolute inset-0 pointer-events-none overflow-hidden">
-		<div class="absolute top-0 left-[30%] w-[1px] h-[200vh] bg-gradient-to-b from-supa-400/70 via-supa-400/35 to-transparent rotate-[25deg] origin-top animate-laser-beam-2 shadow-[0_0_10px_rgba(62,207,142,0.5)]"></div>
+		<div class="absolute top-0 left-[30%] w-[1px] h-[200vh] bg-gradient-to-b from-supa-400/60 via-supa-400/30 to-transparent rotate-[25deg] origin-top animate-laser-beam-2 shadow-[0_0_8px_rgba(62,207,142,0.4)]"></div>
 	</div>
 	<div class="absolute inset-0 pointer-events-none overflow-hidden">
-		<div class="absolute top-0 left-[50%] w-[2px] h-[200vh] bg-gradient-to-b from-supa-400/80 via-supa-400/40 to-transparent rotate-[20deg] origin-top animate-laser-beam-3 shadow-[0_0_12px_rgba(62,207,142,0.6)]"></div>
-	</div>
-	<div class="absolute inset-0 pointer-events-none overflow-hidden">
-		<div class="absolute top-0 left-[70%] w-[1px] h-[200vh] bg-gradient-to-b from-supa-400/60 via-supa-400/30 to-transparent rotate-[35deg] origin-top animate-laser-beam-1 shadow-[0_0_8px_rgba(62,207,142,0.4)]" style="animation-delay: 1s;"></div>
+		<div class="absolute top-0 left-[50%] w-[1px] h-[200vh] bg-gradient-to-b from-supa-400/70 via-supa-400/35 to-transparent rotate-[20deg] origin-top animate-laser-beam-3 shadow-[0_0_10px_rgba(62,207,142,0.5)]"></div>
 	</div>
 
 	<!-- Red lasers from top-right to bottom-left -->
 	<div class="absolute inset-0 pointer-events-none overflow-hidden">
-		<div class="absolute top-0 right-[10%] w-[2px] h-[200vh] bg-gradient-to-b from-breach-500/90 via-breach-500/50 to-transparent -rotate-[30deg] origin-top animate-laser-beam-4 shadow-[0_0_15px_rgba(239,68,68,0.7)]"></div>
+		<div class="absolute top-0 right-[10%] w-[1px] h-[200vh] bg-gradient-to-b from-breach-500/80 via-breach-500/40 to-transparent -rotate-[30deg] origin-top animate-laser-beam-4 shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
 	</div>
 	<div class="absolute inset-0 pointer-events-none overflow-hidden">
-		<div class="absolute top-0 right-[30%] w-[1px] h-[200vh] bg-gradient-to-b from-breach-500/70 via-breach-500/35 to-transparent -rotate-[25deg] origin-top animate-laser-beam-5 shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
+		<div class="absolute top-0 right-[30%] w-[1px] h-[200vh] bg-gradient-to-b from-breach-500/60 via-breach-500/30 to-transparent -rotate-[25deg] origin-top animate-laser-beam-5 shadow-[0_0_8px_rgba(239,68,68,0.4)]"></div>
 	</div>
 	<div class="absolute inset-0 pointer-events-none overflow-hidden">
-		<div class="absolute top-0 right-[50%] w-[2px] h-[200vh] bg-gradient-to-b from-breach-500/80 via-breach-500/40 to-transparent -rotate-[20deg] origin-top animate-laser-beam-6 shadow-[0_0_12px_rgba(239,68,68,0.6)]"></div>
-	</div>
-	<div class="absolute inset-0 pointer-events-none overflow-hidden">
-		<div class="absolute top-0 right-[70%] w-[1px] h-[200vh] bg-gradient-to-b from-breach-500/60 via-breach-500/30 to-transparent -rotate-[35deg] origin-top animate-laser-beam-4 shadow-[0_0_8px_rgba(239,68,68,0.4)]" style="animation-delay: 1.5s;"></div>
+		<div class="absolute top-0 right-[50%] w-[1px] h-[200vh] bg-gradient-to-b from-breach-500/70 via-breach-500/35 to-transparent -rotate-[20deg] origin-top animate-laser-beam-6 shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
 	</div>
 
-	<!-- HORIZONTAL SWEEPING LASERS - Thicker, more visible -->
-	<div class="absolute top-[15%] left-0 w-full h-[2px] overflow-hidden">
-		<div class="absolute w-[40%] h-full bg-gradient-to-r from-transparent via-supa-400 to-transparent animate-laser-sweep shadow-[0_0_20px_rgba(62,207,142,0.9)]"></div>
+	<!-- HORIZONTAL SWEEPING LASERS -->
+	<div class="absolute top-[20%] left-0 w-full h-[1px] overflow-hidden">
+		<div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-supa-400 to-transparent animate-laser-sweep shadow-[0_0_15px_rgba(62,207,142,0.8)]"></div>
 	</div>
-	<div class="absolute top-[35%] left-0 w-full h-[2px] overflow-hidden">
-		<div class="absolute w-[35%] h-full bg-gradient-to-r from-transparent via-breach-500 to-transparent animate-laser-sweep-reverse shadow-[0_0_20px_rgba(239,68,68,0.9)]"></div>
+	<div class="absolute top-[40%] left-0 w-full h-[1px] overflow-hidden">
+		<div class="absolute w-[25%] h-full bg-gradient-to-r from-transparent via-breach-500 to-transparent animate-laser-sweep-reverse shadow-[0_0_15px_rgba(239,68,68,0.8)]"></div>
 	</div>
-	<div class="absolute top-[55%] left-0 w-full h-[2px] overflow-hidden">
-		<div class="absolute w-[40%] h-full bg-gradient-to-r from-transparent via-supa-400 to-transparent animate-laser-sweep-slow shadow-[0_0_20px_rgba(62,207,142,0.9)]"></div>
+	<div class="absolute top-[60%] left-0 w-full h-[1px] overflow-hidden">
+		<div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-supa-400 to-transparent animate-laser-sweep-slow shadow-[0_0_15px_rgba(62,207,142,0.8)]"></div>
 	</div>
-	<div class="absolute top-[75%] left-0 w-full h-[2px] overflow-hidden">
-		<div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-breach-500 to-transparent animate-laser-sweep-reverse-slow shadow-[0_0_20px_rgba(239,68,68,0.9)]"></div>
-	</div>
-	<div class="absolute top-[90%] left-0 w-full h-[1px] overflow-hidden">
-		<div class="absolute w-[25%] h-full bg-gradient-to-r from-transparent via-supa-400 to-transparent animate-laser-sweep shadow-[0_0_15px_rgba(62,207,142,0.7)]" style="animation-delay: 2s;"></div>
+	<div class="absolute top-[80%] left-0 w-full h-[1px] overflow-hidden">
+		<div class="absolute w-[20%] h-full bg-gradient-to-r from-transparent via-breach-500 to-transparent animate-laser-sweep-reverse-slow shadow-[0_0_15px_rgba(239,68,68,0.8)]"></div>
 	</div>
 
 	<!-- CROSSING X PATTERN - Classic security grid -->
-	<div class="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
+	<div class="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
 		<div class="absolute top-0 left-0 w-full h-full">
 			<div class="absolute w-[2px] h-[150%] bg-gradient-to-b from-transparent via-supa-400 to-transparent left-1/2 top-0 rotate-45 origin-top-left animate-pulse"></div>
 			<div class="absolute w-[2px] h-[150%] bg-gradient-to-b from-transparent via-breach-500 to-transparent right-1/2 top-0 -rotate-45 origin-top-right animate-pulse" style="animation-delay: 0.5s;"></div>
 		</div>
 	</div>
 
-	<!-- VERTICAL SCANNING BEAMS - More of them -->
-	<div class="absolute top-0 left-[15%] h-full w-[1px] overflow-hidden">
-		<div class="absolute w-full h-[25%] bg-gradient-to-b from-transparent via-supa-400/70 to-transparent animate-laser-vertical shadow-[0_0_15px_rgba(62,207,142,0.7)]"></div>
+	<!-- VERTICAL SCANNING BEAMS -->
+	<div class="absolute top-0 left-[25%] h-full w-[1px] overflow-hidden">
+		<div class="absolute w-full h-[20%] bg-gradient-to-b from-transparent via-supa-400/60 to-transparent animate-laser-vertical shadow-[0_0_12px_rgba(62,207,142,0.6)]"></div>
 	</div>
-	<div class="absolute top-0 left-[40%] h-full w-[1px] overflow-hidden">
-		<div class="absolute w-full h-[20%] bg-gradient-to-b from-transparent via-breach-500/60 to-transparent animate-laser-vertical-reverse shadow-[0_0_12px_rgba(239,68,68,0.6)]" style="animation-delay: 1s;"></div>
-	</div>
-	<div class="absolute top-0 right-[40%] h-full w-[1px] overflow-hidden">
-		<div class="absolute w-full h-[20%] bg-gradient-to-b from-transparent via-supa-400/60 to-transparent animate-laser-vertical shadow-[0_0_12px_rgba(62,207,142,0.6)]" style="animation-delay: 2s;"></div>
-	</div>
-	<div class="absolute top-0 right-[15%] h-full w-[1px] overflow-hidden">
-		<div class="absolute w-full h-[25%] bg-gradient-to-b from-transparent via-breach-500/70 to-transparent animate-laser-vertical-reverse shadow-[0_0_15px_rgba(239,68,68,0.7)]"></div>
+	<div class="absolute top-0 right-[25%] h-full w-[1px] overflow-hidden">
+		<div class="absolute w-full h-[20%] bg-gradient-to-b from-transparent via-breach-500/60 to-transparent animate-laser-vertical-reverse shadow-[0_0_12px_rgba(239,68,68,0.6)]"></div>
 	</div>
 
-	<!-- WARNING LIGHTS - Scattered around edges -->
-	<div class="absolute top-8 left-[25%] w-2 h-2 bg-breach-500 animate-pulse shadow-lg shadow-breach-500/80"></div>
-	<div class="absolute top-8 right-[35%] w-2 h-2 bg-supa-400 animate-pulse shadow-lg shadow-supa-400/80" style="animation-delay: 0.5s;"></div>
-	<div class="absolute bottom-8 left-[45%] w-2 h-2 bg-breach-500 animate-pulse shadow-lg shadow-breach-500/80" style="animation-delay: 1s;"></div>
-	<div class="absolute top-[30%] left-4 w-1.5 h-1.5 bg-supa-400 animate-pulse shadow-lg shadow-supa-400/80" style="animation-delay: 0.3s;"></div>
-	<div class="absolute top-[50%] right-4 w-1.5 h-1.5 bg-breach-500 animate-pulse shadow-lg shadow-breach-500/80" style="animation-delay: 0.7s;"></div>
-	<div class="absolute top-[70%] left-4 w-1.5 h-1.5 bg-breach-500 animate-pulse shadow-lg shadow-breach-500/80" style="animation-delay: 1.2s;"></div>
-
-	<!-- HEXAGON OVERLAY - Targeting system feel -->
-	<div class="absolute top-1/4 left-1/4 w-32 h-32 pointer-events-none opacity-20">
-		<svg viewBox="0 0 100 100" class="w-full h-full animate-spin" style="animation-duration: 20s;">
-			<polygon points="50,5 90,25 90,75 50,95 10,75 10,25" fill="none" stroke="currentColor" stroke-width="1" class="text-supa-400"/>
-		</svg>
-	</div>
-	<div class="absolute bottom-1/4 right-1/4 w-24 h-24 pointer-events-none opacity-15">
-		<svg viewBox="0 0 100 100" class="w-full h-full animate-spin" style="animation-duration: 25s; animation-direction: reverse;">
-			<polygon points="50,5 90,25 90,75 50,95 10,75 10,25" fill="none" stroke="currentColor" stroke-width="1" class="text-breach-500"/>
-		</svg>
-	</div>
-
-	<!-- EDGE GLOW EFFECT - More dramatic -->
+	<!-- EDGE GLOW EFFECT -->
 	<div class="absolute inset-0 pointer-events-none">
-		<div class="absolute top-0 left-0 w-full h-48 bg-gradient-to-b from-supa-500/15 to-transparent"></div>
-		<div class="absolute bottom-0 left-0 w-full h-48 bg-gradient-to-t from-breach-500/15 to-transparent"></div>
-		<div class="absolute top-0 left-0 w-48 h-full bg-gradient-to-r from-supa-500/10 to-transparent"></div>
-		<div class="absolute top-0 right-0 w-48 h-full bg-gradient-to-l from-breach-500/10 to-transparent"></div>
+		<div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-supa-500/10 to-transparent"></div>
+		<div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-breach-500/10 to-transparent"></div>
+		<div class="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-supa-500/5 to-transparent"></div>
+		<div class="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-breach-500/5 to-transparent"></div>
 	</div>
-
-	<!-- AMBIENT PULSE - Background heartbeat -->
-	<div class="absolute inset-0 pointer-events-none bg-gradient-radial from-supa-500/5 via-transparent to-breach-500/5 animate-pulse" style="animation-duration: 4s;"></div>
 
 	<!-- Main Hero Content -->
 	<div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
