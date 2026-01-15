@@ -1,0 +1,427 @@
+{
+  "timestamp": "2026-01-15T14:01:59.389Z",
+  "summary": {
+    "totalTests": 49,
+    "breached": 49,
+    "secure": 0,
+    "errors": 0,
+    "detectionRate": 100
+  },
+  "bySeverity": {
+    "critical": 25,
+    "high": 16,
+    "medium": 7,
+    "low": 1
+  },
+  "byScenario": {
+    "Scenario 1: No Security": {
+      "total": 2,
+      "breached": 2,
+      "secure": 0,
+      "errors": 0
+    },
+    "Scenario 2: Bad RLS": {
+      "total": 2,
+      "breached": 2,
+      "secure": 0,
+      "errors": 0
+    },
+    "Scenario 3: Business Logic": {
+      "total": 1,
+      "breached": 1,
+      "secure": 0,
+      "errors": 0
+    },
+    "Scenario 4: Vibecoder Mistakes": {
+      "total": 2,
+      "breached": 2,
+      "secure": 0,
+      "errors": 0
+    },
+    "Scenario 5: Advanced Attacks": {
+      "total": 2,
+      "breached": 2,
+      "secure": 0,
+      "errors": 0
+    },
+    "Scenario 6: GraphQL & Vault": {
+      "total": 6,
+      "breached": 6,
+      "secure": 0,
+      "errors": 0
+    },
+    "Scenario 7: Auth & Multi-tenant": {
+      "total": 7,
+      "breached": 7,
+      "secure": 0,
+      "errors": 0
+    },
+    "Scenario 8: Database & Network": {
+      "total": 8,
+      "breached": 8,
+      "secure": 0,
+      "errors": 0
+    },
+    "Scenario 9: AI & Realtime": {
+      "total": 9,
+      "breached": 9,
+      "secure": 0,
+      "errors": 0
+    },
+    "Scenario 10: Backup & Logging": {
+      "total": 10,
+      "breached": 10,
+      "secure": 0,
+      "errors": 0
+    }
+  },
+  "detectedAttacks": [
+    {
+      "scenario": "Scenario 1: No Security",
+      "test": "Read all users PII",
+      "attack": "rls-bypass",
+      "severity": "critical",
+      "evidence": "Got 3 users with SSN, credit cards"
+    },
+    {
+      "scenario": "Scenario 1: No Security",
+      "test": "Read exposed secrets",
+      "attack": "data-exposure",
+      "severity": "critical",
+      "evidence": "Got 3 secrets"
+    },
+    {
+      "scenario": "Scenario 2: Bad RLS",
+      "test": "RLS bypass - read all profiles",
+      "attack": "rls-policy-bypass",
+      "severity": "critical",
+      "evidence": "Read 3 profiles"
+    },
+    {
+      "scenario": "Scenario 2: Bad RLS",
+      "test": "Update any profile (privilege escalation)",
+      "attack": "rls-update-bypass",
+      "severity": "critical",
+      "evidence": "Escalated victim to admin!"
+    },
+    {
+      "scenario": "Scenario 3: Business Logic",
+      "test": "Price manipulation",
+      "attack": "business-logic-price",
+      "severity": "critical",
+      "evidence": "Created cart with $0.01 price!"
+    },
+    {
+      "scenario": "Scenario 4: Vibecoder Mistakes",
+      "test": "Default credentials exposed",
+      "attack": "vibecoder-default-creds",
+      "severity": "critical",
+      "evidence": "Found default credentials!"
+    },
+    {
+      "scenario": "Scenario 4: Vibecoder Mistakes",
+      "test": "API keys stored in database",
+      "attack": "vibecoder-api-keys",
+      "severity": "critical",
+      "evidence": "Found 3 exposed API keys"
+    },
+    {
+      "scenario": "Scenario 5: Advanced Attacks",
+      "test": "SQL injection via RPC",
+      "attack": "injection-sql-rpc",
+      "severity": "critical",
+      "evidence": "Executed arbitrary SQL!"
+    },
+    {
+      "scenario": "Scenario 5: Advanced Attacks",
+      "test": "XSS payloads stored",
+      "attack": "injection-xss-stored",
+      "severity": "high",
+      "evidence": "Found stored XSS!"
+    },
+    {
+      "scenario": "Scenario 6: GraphQL & Vault",
+      "test": "GraphQL schema introspection",
+      "attack": "graphql-introspection",
+      "severity": "medium",
+      "evidence": "Schema exposed: 6 types with mutations!"
+    },
+    {
+      "scenario": "Scenario 6: GraphQL & Vault",
+      "test": "Vault secrets exposed",
+      "attack": "vault-secrets-exposed",
+      "severity": "critical",
+      "evidence": "CRITICAL: 5 vault secrets exposed!"
+    },
+    {
+      "scenario": "Scenario 6: GraphQL & Vault",
+      "test": "pgsodium encryption keys",
+      "attack": "pgsodium-keys-exposed",
+      "severity": "critical",
+      "evidence": "Encryption key material exposed!"
+    },
+    {
+      "scenario": "Scenario 6: GraphQL & Vault",
+      "test": "Storage objects public",
+      "attack": "storage-public-access",
+      "severity": "high",
+      "evidence": "Private storage objects exposed!"
+    },
+    {
+      "scenario": "Scenario 6: GraphQL & Vault",
+      "test": "Bucket policies exposed",
+      "attack": "storage-bucket-policies",
+      "severity": "medium",
+      "evidence": "3 bucket policies enumerable"
+    },
+    {
+      "scenario": "Scenario 6: GraphQL & Vault",
+      "test": "Deep nested data access",
+      "attack": "graphql-depth-abuse",
+      "severity": "medium",
+      "evidence": "Deep nesting query successful"
+    },
+    {
+      "scenario": "Scenario 7: Auth & Multi-tenant",
+      "test": "OAuth provider secrets",
+      "attack": "auth-provider-secrets",
+      "severity": "critical",
+      "evidence": "CRITICAL: 4 OAuth secrets exposed!"
+    },
+    {
+      "scenario": "Scenario 7: Auth & Multi-tenant",
+      "test": "Auth tokens/OTP exposed",
+      "attack": "auth-tokens-exposed",
+      "severity": "critical",
+      "evidence": "Magic links/OTP codes exposed: 5"
+    },
+    {
+      "scenario": "Scenario 7: Auth & Multi-tenant",
+      "test": "Cross-tenant data access",
+      "attack": "multi-tenant-leak",
+      "severity": "critical",
+      "evidence": "4 tenant API keys exposed!"
+    },
+    {
+      "scenario": "Scenario 7: Auth & Multi-tenant",
+      "test": "Cross-tenant user data",
+      "attack": "multi-tenant-users",
+      "severity": "critical",
+      "evidence": "Cross-tenant: 4 tenants' users visible!"
+    },
+    {
+      "scenario": "Scenario 7: Auth & Multi-tenant",
+      "test": "Session tokens exposed",
+      "attack": "auth-session-leak",
+      "severity": "critical",
+      "evidence": "JWT/session tokens exposed!"
+    },
+    {
+      "scenario": "Scenario 7: Auth & Multi-tenant",
+      "test": "MFA secrets exposed",
+      "attack": "auth-mfa-secrets",
+      "severity": "critical",
+      "evidence": "MFA TOTP secrets and backup codes exposed!"
+    },
+    {
+      "scenario": "Scenario 7: Auth & Multi-tenant",
+      "test": "Anonymous user upgrade",
+      "attack": "auth-anon-upgrade",
+      "severity": "high",
+      "evidence": "Anonymous upgrade to admin possible!"
+    },
+    {
+      "scenario": "Scenario 8: Database & Network",
+      "test": "Database credentials exposed",
+      "attack": "db-credentials-exposed",
+      "severity": "critical",
+      "evidence": "4 database passwords exposed!"
+    },
+    {
+      "scenario": "Scenario 8: Database & Network",
+      "test": "Replication slots exposed",
+      "attack": "db-replication-exposed",
+      "severity": "high",
+      "evidence": "3 replication slots visible"
+    },
+    {
+      "scenario": "Scenario 8: Database & Network",
+      "test": "Sequences predictable",
+      "attack": "db-sequence-prediction",
+      "severity": "medium",
+      "evidence": "Sequence values exposed: users_id_seq, orders_id_seq, invoices_id_seq, transactions_id_seq"
+    },
+    {
+      "scenario": "Scenario 8: Database & Network",
+      "test": "JSONB admin bypass",
+      "attack": "postgrest-jsonb-bypass",
+      "severity": "high",
+      "evidence": "JSONB operator query exposed admin data!"
+    },
+    {
+      "scenario": "Scenario 8: Database & Network",
+      "test": "Full-text search on secrets",
+      "attack": "postgrest-fts-abuse",
+      "severity": "high",
+      "evidence": "Confidential documents searchable: 1"
+    },
+    {
+      "scenario": "Scenario 8: Database & Network",
+      "test": "SSRF webhook URLs",
+      "attack": "network-ssrf-webhooks",
+      "severity": "critical",
+      "evidence": "SSRF targets exposed (AWS metadata, localhost)!"
+    },
+    {
+      "scenario": "Scenario 8: Database & Network",
+      "test": "Extensions configuration",
+      "attack": "db-extension-config",
+      "severity": "medium",
+      "evidence": "Extension configs with secrets exposed!"
+    },
+    {
+      "scenario": "Scenario 8: Database & Network",
+      "test": "Migration history",
+      "attack": "db-migration-exposed",
+      "severity": "high",
+      "evidence": "Migration SQL exposed including secrets!"
+    },
+    {
+      "scenario": "Scenario 9: AI & Realtime",
+      "test": "AI embeddings exposed",
+      "attack": "ai-embeddings-exposed",
+      "severity": "high",
+      "evidence": "Sensitive data in embeddings exposed!"
+    },
+    {
+      "scenario": "Scenario 9: AI & Realtime",
+      "test": "RAG documents leaked",
+      "attack": "ai-rag-leak",
+      "severity": "critical",
+      "evidence": "Confidential RAG documents exposed!"
+    },
+    {
+      "scenario": "Scenario 9: AI & Realtime",
+      "test": "AI config with API keys",
+      "attack": "ai-config-exposed",
+      "severity": "critical",
+      "evidence": "AI API keys exposed (OpenAI, Anthropic)!"
+    },
+    {
+      "scenario": "Scenario 9: AI & Realtime",
+      "test": "System prompts exposed",
+      "attack": "ai-prompt-leak",
+      "severity": "high",
+      "evidence": "AI system prompts leaked!"
+    },
+    {
+      "scenario": "Scenario 9: AI & Realtime",
+      "test": "Cross-user conversations",
+      "attack": "ai-conversation-leak",
+      "severity": "critical",
+      "evidence": "Conversations from 6 users visible!"
+    },
+    {
+      "scenario": "Scenario 9: AI & Realtime",
+      "test": "Realtime channels enumerable",
+      "attack": "realtime-channel-enum",
+      "severity": "medium",
+      "evidence": "Private realtime channels exposed!"
+    },
+    {
+      "scenario": "Scenario 9: AI & Realtime",
+      "test": "Realtime messages exposed",
+      "attack": "realtime-message-leak",
+      "severity": "high",
+      "evidence": "Sensitive realtime messages exposed!"
+    },
+    {
+      "scenario": "Scenario 9: AI & Realtime",
+      "test": "Edge function env vars",
+      "attack": "edge-env-exposed",
+      "severity": "critical",
+      "evidence": "Edge function secrets exposed!"
+    },
+    {
+      "scenario": "Scenario 9: AI & Realtime",
+      "test": "AI training data exposed",
+      "attack": "ai-training-leak",
+      "severity": "high",
+      "evidence": "Training data with secrets: 3 records"
+    },
+    {
+      "scenario": "Scenario 10: Backup & Logging",
+      "test": "Backup locations exposed",
+      "attack": "backup-locations-exposed",
+      "severity": "critical",
+      "evidence": "Backup locations and encryption keys exposed!"
+    },
+    {
+      "scenario": "Scenario 10: Backup & Logging",
+      "test": "Backup AWS credentials",
+      "attack": "backup-creds-exposed",
+      "severity": "critical",
+      "evidence": "AWS backup credentials exposed!"
+    },
+    {
+      "scenario": "Scenario 10: Backup & Logging",
+      "test": "PITR recovery points",
+      "attack": "backup-pitr-exposed",
+      "severity": "high",
+      "evidence": "3 recovery points enumerable"
+    },
+    {
+      "scenario": "Scenario 10: Backup & Logging",
+      "test": "Audit logs with passwords",
+      "attack": "logging-audit-passwords",
+      "severity": "critical",
+      "evidence": "Audit logs contain passwords/keys!"
+    },
+    {
+      "scenario": "Scenario 10: Backup & Logging",
+      "test": "App logs with secrets",
+      "attack": "logging-app-secrets",
+      "severity": "high",
+      "evidence": "App logs expose sensitive data!"
+    },
+    {
+      "scenario": "Scenario 10: Backup & Logging",
+      "test": "Stack traces exposed",
+      "attack": "logging-stack-traces",
+      "severity": "medium",
+      "evidence": "1 stack traces exposed"
+    },
+    {
+      "scenario": "Scenario 10: Backup & Logging",
+      "test": "Scheduled jobs exposed",
+      "attack": "jobs-cron-exposed",
+      "severity": "high",
+      "evidence": "Dangerous cron jobs exposed!"
+    },
+    {
+      "scenario": "Scenario 10: Backup & Logging",
+      "test": "Job execution history",
+      "attack": "jobs-history-exposed",
+      "severity": "high",
+      "evidence": "Job history exposes sensitive commands!"
+    },
+    {
+      "scenario": "Scenario 10: Backup & Logging",
+      "test": "Metrics enumeration",
+      "attack": "logging-metrics-exposed",
+      "severity": "low",
+      "evidence": "4 metrics visible"
+    },
+    {
+      "scenario": "Scenario 10: Backup & Logging",
+      "test": "Error tracking with PII",
+      "attack": "logging-errors-pii",
+      "severity": "high",
+      "evidence": "Error tracking exposes PII and credentials!"
+    }
+  ],
+  "config": {
+    "supabaseUrl": "http://127.0.0.1:64321",
+    "testedAt": "2026-01-15T14:01:59.390Z"
+  }
+}
