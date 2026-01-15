@@ -1,9 +1,8 @@
 /**
- * Project Store - Manages target Supabase project credentials
- * Stores credentials in localStorage for persistence
+ * Project Store - Session-only storage for target Supabase project credentials
+ * SECURITY: Credentials are NOT persisted to localStorage or any storage
+ * They only exist in memory for the current browser session
  */
-
-import { browser } from '$app/environment';
 
 export interface TargetProject {
 	id: string;
@@ -15,55 +14,17 @@ export interface TargetProject {
 	lastTested?: string;
 }
 
-// Storage key for localStorage
-const STORAGE_KEY = 'supashield_projects';
-const ACTIVE_PROJECT_KEY = 'supashield_active_project';
-
-// Load projects from localStorage
-function loadProjects(): TargetProject[] {
-	if (!browser) return [];
-	const stored = localStorage.getItem(STORAGE_KEY);
-	if (!stored) return [];
-	try {
-		return JSON.parse(stored);
-	} catch {
-		return [];
-	}
-}
-
-// Load active project ID
-function loadActiveProjectId(): string | null {
-	if (!browser) return null;
-	return localStorage.getItem(ACTIVE_PROJECT_KEY);
-}
-
-// Reactive state
-let projects = $state<TargetProject[]>(loadProjects());
-let activeProjectId = $state<string | null>(loadActiveProjectId());
+// In-memory only - no persistence
+let projects = $state<TargetProject[]>([]);
+let activeProjectId = $state<string | null>(null);
 
 // Derived: active project
 const activeProject = $derived(
 	activeProjectId ? projects.find((p) => p.id === activeProjectId) ?? null : null
 );
 
-// Save projects to localStorage
-function saveProjects() {
-	if (!browser) return;
-	localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
-}
-
-// Save active project ID
-function saveActiveProjectId() {
-	if (!browser) return;
-	if (activeProjectId) {
-		localStorage.setItem(ACTIVE_PROJECT_KEY, activeProjectId);
-	} else {
-		localStorage.removeItem(ACTIVE_PROJECT_KEY);
-	}
-}
-
 /**
- * Add a new target project
+ * Add a new target project (session only)
  */
 export function addProject(
 	name: string,
@@ -81,7 +42,6 @@ export function addProject(
 	};
 
 	projects = [...projects, project];
-	saveProjects();
 
 	// Auto-select if first project
 	if (projects.length === 1) {
@@ -103,7 +63,6 @@ export function updateProject(
 
 	const updated = { ...projects[index], ...updates };
 	projects = [...projects.slice(0, index), updated, ...projects.slice(index + 1)];
-	saveProjects();
 
 	return updated;
 }
@@ -116,12 +75,10 @@ export function deleteProject(id: string): boolean {
 	if (index === -1) return false;
 
 	projects = [...projects.slice(0, index), ...projects.slice(index + 1)];
-	saveProjects();
 
 	// Clear active if deleted
 	if (activeProjectId === id) {
 		activeProjectId = projects.length > 0 ? projects[0].id : null;
-		saveActiveProjectId();
 	}
 
 	return true;
@@ -132,7 +89,6 @@ export function deleteProject(id: string): boolean {
  */
 export function setActiveProject(id: string | null): void {
 	activeProjectId = id;
-	saveActiveProjectId();
 }
 
 /**
