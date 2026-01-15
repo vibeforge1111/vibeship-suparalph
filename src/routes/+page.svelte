@@ -647,23 +647,28 @@
 					<span class="flex-shrink-0 w-8 h-8 bg-surface-700 border border-gray-600 flex items-center justify-center text-supa-400 font-mono">1</span>
 					<div>
 						<p class="text-white font-medium">Copy Your Vulnerability Findings</p>
-						<p class="text-sm text-gray-400">Click the button below to copy all detected issues in a format the AI understands</p>
+						<p class="text-sm text-gray-400">Click the green button below to copy all detected issues</p>
 					</div>
 				</div>
 
 				<div class="flex gap-4 items-start">
 					<span class="flex-shrink-0 w-8 h-8 bg-surface-700 border border-gray-600 flex items-center justify-center text-supa-400 font-mono">2</span>
 					<div>
-						<p class="text-white font-medium">Open Supabase SQL Editor</p>
-						<p class="text-sm text-gray-400">Go to your project's SQL Editor which has the AI Assistant built-in</p>
+						<p class="text-white font-medium">Paste into Any AI Assistant</p>
+						<p class="text-sm text-gray-400">Use one of these options to get SQL fixes:</p>
+						<ul class="mt-2 space-y-1 text-sm text-gray-500">
+							<li>• <span class="text-white">ChatGPT</span> → chat.openai.com</li>
+							<li>• <span class="text-white">Claude</span> → claude.ai</li>
+							<li>• <span class="text-white">Supabase AI</span> → In SQL Editor, click the <span class="text-supa-400">✨ sparkle icon</span> in top-right</li>
+						</ul>
 					</div>
 				</div>
 
 				<div class="flex gap-4 items-start">
 					<span class="flex-shrink-0 w-8 h-8 bg-surface-700 border border-gray-600 flex items-center justify-center text-supa-400 font-mono">3</span>
 					<div>
-						<p class="text-white font-medium">Paste & Ask AI to Fix</p>
-						<p class="text-sm text-gray-400">Paste the findings and ask: "Help me fix these security vulnerabilities"</p>
+						<p class="text-white font-medium">Apply the Generated SQL</p>
+						<p class="text-sm text-gray-400">Copy the SQL fixes from AI and run them in your Supabase SQL Editor</p>
 					</div>
 				</div>
 			</div>
@@ -677,7 +682,7 @@
 						).join('\n');
 						const text = `I ran a security scan on my Supabase project and found ${allBreaches.length} vulnerabilities:\n\n${findings}\n\nPlease help me fix these security issues. Show me the SQL to:\n1. Enable proper RLS policies\n2. Fix any unsafe configurations\n3. Secure my database`;
 						navigator.clipboard.writeText(text);
-						alert(`Copied ${allBreaches.length} findings! Now paste this in Supabase SQL Editor AI`);
+						alert(`Copied ${allBreaches.length} findings! Paste into ChatGPT, Claude, or Supabase AI`);
 					}}
 					class="px-6 py-3 bg-supa-600 hover:bg-supa-500 text-white font-bold transition-all hover:shadow-lg hover:shadow-supa-500/30 flex items-center gap-2"
 				>
@@ -686,21 +691,22 @@
 				</button>
 
 				<a
-					href="https://supabase.com/dashboard/project/_/sql/new"
+					href="https://supabase.com/dashboard"
 					target="_blank"
 					rel="noopener noreferrer"
 					class="px-6 py-3 border border-supa-500 text-supa-400 hover:bg-supa-500/10 font-bold transition-all flex items-center gap-2"
 				>
-					<span>Open SQL Editor</span>
+					<span>Open Supabase Dashboard</span>
 					<span class="text-xs">↗</span>
 				</a>
 			</div>
 
-			<!-- Pro Tip -->
-			<div class="mt-6 p-4 bg-surface-900 border-l-4 border-supa-500">
+			<!-- Where to find Supabase AI -->
+			<div class="mt-6 p-4 bg-surface-900 border-l-4 border-yellow-500">
 				<p class="text-sm text-gray-300">
-					<span class="text-supa-400 font-bold">Pro Tip:</span> Supabase AI has full context of your schema,
-					so it can generate exact SQL fixes for your specific tables and columns. It's smarter than generic fix recommendations!
+					<span class="text-yellow-400 font-bold">Finding Supabase AI:</span> In your project dashboard, go to
+					<span class="text-white">SQL Editor</span> → Look for the <span class="text-supa-400">✨ sparkle/wand icon</span> in the top-right corner of the editor.
+					If you can't find it, just use ChatGPT or Claude instead - they work great too!
 				</p>
 			</div>
 		</div>
