@@ -86,13 +86,19 @@ export default {
 				'glitch': 'glitch 0.3s ease-in-out infinite',
 				'typing': 'typing 3.5s steps(40, end)',
 				'blink': 'blink 1s step-end infinite',
-				// Laser animations
-				'laser-horizontal': 'laser-horizontal 3s linear infinite',
-				'laser-horizontal-reverse': 'laser-horizontal-reverse 3.5s linear infinite',
+				// Laser beam animations - Movie style
+				'laser-beam-1': 'laser-flicker 3s ease-in-out infinite',
+				'laser-beam-2': 'laser-flicker 4s ease-in-out infinite',
+				'laser-beam-3': 'laser-flicker 3.5s ease-in-out infinite',
+				'laser-beam-4': 'laser-flicker 3.2s ease-in-out infinite',
+				'laser-beam-5': 'laser-flicker 4.5s ease-in-out infinite',
+				'laser-beam-6': 'laser-flicker 3.8s ease-in-out infinite',
+				'laser-sweep': 'laser-sweep 4s linear infinite',
+				'laser-sweep-reverse': 'laser-sweep-reverse 5s linear infinite',
+				'laser-sweep-slow': 'laser-sweep 7s linear infinite',
+				'laser-sweep-reverse-slow': 'laser-sweep-reverse 6s linear infinite',
 				'laser-vertical': 'laser-vertical 4s linear infinite',
-				'laser-vertical-reverse': 'laser-vertical-reverse 3.5s linear infinite',
-				'laser-diagonal': 'laser-diagonal 5s linear infinite',
-				'laser-diagonal-reverse': 'laser-diagonal-reverse 6s linear infinite',
+				'laser-vertical-reverse': 'laser-vertical-reverse 5s linear infinite',
 			},
 			keyframes: {
 				float: {
@@ -147,34 +153,32 @@ export default {
 				blink: {
 					'50%': { borderColor: 'transparent' },
 				},
-				// Laser keyframes
+				// Laser keyframes - Movie style security grid
 				'scan-line-vertical': {
 					'0%': { transform: 'translateX(-100%)' },
 					'100%': { transform: 'translateX(400%)' },
 				},
-				'laser-horizontal': {
-					'0%': { transform: 'translateX(-100%)' },
-					'100%': { transform: 'translateX(calc(100vw + 100%))' },
+				'laser-flicker': {
+					'0%, 100%': { opacity: '0.6' },
+					'25%': { opacity: '0.8' },
+					'50%': { opacity: '0.4' },
+					'75%': { opacity: '0.9' },
 				},
-				'laser-horizontal-reverse': {
-					'0%': { transform: 'translateX(100vw)' },
+				'laser-sweep': {
+					'0%': { transform: 'translateX(-100%)' },
+					'100%': { transform: 'translateX(400%)' },
+				},
+				'laser-sweep-reverse': {
+					'0%': { transform: 'translateX(400%)' },
 					'100%': { transform: 'translateX(-100%)' },
 				},
 				'laser-vertical': {
 					'0%': { transform: 'translateY(-100%)' },
-					'100%': { transform: 'translateY(100vh)' },
+					'100%': { transform: 'translateY(600%)' },
 				},
 				'laser-vertical-reverse': {
-					'0%': { transform: 'translateY(100vh)' },
+					'0%': { transform: 'translateY(600%)' },
 					'100%': { transform: 'translateY(-100%)' },
-				},
-				'laser-diagonal': {
-					'0%': { transform: 'translateX(-50%) translateY(-50%)' },
-					'100%': { transform: 'translateX(100vw) translateY(100vh)' },
-				},
-				'laser-diagonal-reverse': {
-					'0%': { transform: 'translateX(100vw) translateY(-50%)' },
-					'100%': { transform: 'translateX(-50%) translateY(100vh)' },
 				},
 			},
 			// Vibeship: No rounded corners

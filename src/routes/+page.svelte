@@ -133,35 +133,69 @@
 		<div class="absolute inset-0" style="background-image: linear-gradient(rgba(62, 207, 142, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(62, 207, 142, 0.1) 1px, transparent 1px); background-size: 50px 50px;"></div>
 	</div>
 
-	<!-- LASER SECURITY BREACH EFFECTS -->
-	<!-- Horizontal Green Laser - Top -->
-	<div class="absolute top-0 left-0 w-full h-[2px] overflow-hidden">
-		<div class="absolute w-32 h-full bg-gradient-to-r from-transparent via-supa-400 to-transparent animate-laser-horizontal"></div>
+	<!-- ============================================== -->
+	<!-- MOVIE-STYLE SECURITY LASER GRID               -->
+	<!-- ============================================== -->
+
+	<!-- DIAGONAL LASER BEAMS - Like heist movie security -->
+	<!-- Green lasers from top-left to bottom-right -->
+	<div class="absolute inset-0 pointer-events-none overflow-hidden">
+		<div class="absolute top-0 left-[10%] w-[1px] h-[200vh] bg-gradient-to-b from-supa-400/80 via-supa-400/40 to-transparent rotate-[30deg] origin-top animate-laser-beam-1 shadow-[0_0_10px_rgba(62,207,142,0.5)]"></div>
 	</div>
-	<!-- Horizontal Red Laser - Bottom -->
-	<div class="absolute bottom-0 left-0 w-full h-[2px] overflow-hidden">
-		<div class="absolute w-32 h-full bg-gradient-to-r from-transparent via-breach-500 to-transparent animate-laser-horizontal-reverse"></div>
+	<div class="absolute inset-0 pointer-events-none overflow-hidden">
+		<div class="absolute top-0 left-[30%] w-[1px] h-[200vh] bg-gradient-to-b from-supa-400/60 via-supa-400/30 to-transparent rotate-[25deg] origin-top animate-laser-beam-2 shadow-[0_0_8px_rgba(62,207,142,0.4)]"></div>
 	</div>
-	<!-- Vertical Green Laser - Left -->
-	<div class="absolute top-0 left-0 h-full w-[2px] overflow-hidden">
-		<div class="absolute h-32 w-full bg-gradient-to-b from-transparent via-supa-400 to-transparent animate-laser-vertical"></div>
-	</div>
-	<!-- Vertical Red Laser - Right -->
-	<div class="absolute top-0 right-0 h-full w-[2px] overflow-hidden">
-		<div class="absolute h-32 w-full bg-gradient-to-b from-transparent via-breach-500 to-transparent animate-laser-vertical-reverse"></div>
+	<div class="absolute inset-0 pointer-events-none overflow-hidden">
+		<div class="absolute top-0 left-[50%] w-[1px] h-[200vh] bg-gradient-to-b from-supa-400/70 via-supa-400/35 to-transparent rotate-[20deg] origin-top animate-laser-beam-3 shadow-[0_0_10px_rgba(62,207,142,0.5)]"></div>
 	</div>
 
-	<!-- Diagonal Laser Sweeps -->
-	<div class="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
-		<div class="absolute w-[200%] h-[2px] bg-gradient-to-r from-transparent via-supa-500 to-transparent origin-left rotate-45 animate-laser-diagonal"></div>
+	<!-- Red lasers from top-right to bottom-left -->
+	<div class="absolute inset-0 pointer-events-none overflow-hidden">
+		<div class="absolute top-0 right-[10%] w-[1px] h-[200vh] bg-gradient-to-b from-breach-500/80 via-breach-500/40 to-transparent -rotate-[30deg] origin-top animate-laser-beam-4 shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
 	</div>
-	<div class="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
-		<div class="absolute w-[200%] h-[2px] bg-gradient-to-r from-transparent via-breach-500 to-transparent origin-right -rotate-45 animate-laser-diagonal-reverse"></div>
+	<div class="absolute inset-0 pointer-events-none overflow-hidden">
+		<div class="absolute top-0 right-[30%] w-[1px] h-[200vh] bg-gradient-to-b from-breach-500/60 via-breach-500/30 to-transparent -rotate-[25deg] origin-top animate-laser-beam-5 shadow-[0_0_8px_rgba(239,68,68,0.4)]"></div>
+	</div>
+	<div class="absolute inset-0 pointer-events-none overflow-hidden">
+		<div class="absolute top-0 right-[50%] w-[1px] h-[200vh] bg-gradient-to-b from-breach-500/70 via-breach-500/35 to-transparent -rotate-[20deg] origin-top animate-laser-beam-6 shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
 	</div>
 
-	<!-- Scanning Grid Pulse -->
+	<!-- HORIZONTAL SWEEPING LASERS -->
+	<div class="absolute top-[20%] left-0 w-full h-[1px] overflow-hidden">
+		<div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-supa-400 to-transparent animate-laser-sweep shadow-[0_0_15px_rgba(62,207,142,0.8)]"></div>
+	</div>
+	<div class="absolute top-[40%] left-0 w-full h-[1px] overflow-hidden">
+		<div class="absolute w-[25%] h-full bg-gradient-to-r from-transparent via-breach-500 to-transparent animate-laser-sweep-reverse shadow-[0_0_15px_rgba(239,68,68,0.8)]"></div>
+	</div>
+	<div class="absolute top-[60%] left-0 w-full h-[1px] overflow-hidden">
+		<div class="absolute w-[30%] h-full bg-gradient-to-r from-transparent via-supa-400 to-transparent animate-laser-sweep-slow shadow-[0_0_15px_rgba(62,207,142,0.8)]"></div>
+	</div>
+	<div class="absolute top-[80%] left-0 w-full h-[1px] overflow-hidden">
+		<div class="absolute w-[20%] h-full bg-gradient-to-r from-transparent via-breach-500 to-transparent animate-laser-sweep-reverse-slow shadow-[0_0_15px_rgba(239,68,68,0.8)]"></div>
+	</div>
+
+	<!-- CROSSING X PATTERN - Classic security grid -->
+	<div class="absolute inset-0 pointer-events-none overflow-hidden opacity-20">
+		<div class="absolute top-0 left-0 w-full h-full">
+			<div class="absolute w-[2px] h-[150%] bg-gradient-to-b from-transparent via-supa-400 to-transparent left-1/2 top-0 rotate-45 origin-top-left animate-pulse"></div>
+			<div class="absolute w-[2px] h-[150%] bg-gradient-to-b from-transparent via-breach-500 to-transparent right-1/2 top-0 -rotate-45 origin-top-right animate-pulse" style="animation-delay: 0.5s;"></div>
+		</div>
+	</div>
+
+	<!-- VERTICAL SCANNING BEAMS -->
+	<div class="absolute top-0 left-[25%] h-full w-[1px] overflow-hidden">
+		<div class="absolute w-full h-[20%] bg-gradient-to-b from-transparent via-supa-400/60 to-transparent animate-laser-vertical shadow-[0_0_12px_rgba(62,207,142,0.6)]"></div>
+	</div>
+	<div class="absolute top-0 right-[25%] h-full w-[1px] overflow-hidden">
+		<div class="absolute w-full h-[20%] bg-gradient-to-b from-transparent via-breach-500/60 to-transparent animate-laser-vertical-reverse shadow-[0_0_12px_rgba(239,68,68,0.6)]"></div>
+	</div>
+
+	<!-- EDGE GLOW EFFECT -->
 	<div class="absolute inset-0 pointer-events-none">
-		<div class="absolute inset-0 bg-gradient-to-b from-supa-500/5 via-transparent to-breach-500/5 animate-pulse"></div>
+		<div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-supa-500/10 to-transparent"></div>
+		<div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-breach-500/10 to-transparent"></div>
+		<div class="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-supa-500/5 to-transparent"></div>
+		<div class="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-breach-500/5 to-transparent"></div>
 	</div>
 
 	<!-- Main Hero Content -->
