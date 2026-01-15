@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-
 	let showContent = $state(false);
 	let scanUrl = $state('');
 	let anonKey = $state('');
@@ -103,11 +101,6 @@
 					{ text: `Detection Rate: 100% | Time: ${(data.duration / 1000).toFixed(1)}s`, type: 'info' }
 				];
 				eventSource.close();
-
-				// Redirect to dashboard after showing results
-				setTimeout(() => {
-					goto('/dashboard');
-				}, 5000);
 			});
 
 			eventSource.addEventListener('error', (e) => {
