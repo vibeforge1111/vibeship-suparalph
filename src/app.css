@@ -1,0 +1,105 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* SupaShield Base Styles */
+@layer base {
+	:root {
+		--color-breach: #ef4444;
+		--color-secure: #22c55e;
+		--color-warning: #f59e0b;
+		--color-info: #3b82f6;
+	}
+
+	html {
+		@apply antialiased;
+	}
+
+	body {
+		@apply bg-gray-950 text-gray-100 font-mono;
+	}
+
+	/* Scrollbar styling */
+	::-webkit-scrollbar {
+		@apply w-2 h-2;
+	}
+
+	::-webkit-scrollbar-track {
+		@apply bg-gray-900;
+	}
+
+	::-webkit-scrollbar-thumb {
+		@apply bg-gray-700 rounded;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		@apply bg-gray-600;
+	}
+}
+
+@layer components {
+	/* Status badges */
+	.badge-breach {
+		@apply bg-breach-500/20 text-breach-400 border border-breach-500/30 px-2 py-0.5 text-xs font-mono;
+	}
+
+	.badge-secure {
+		@apply bg-secure-500/20 text-secure-400 border border-secure-500/30 px-2 py-0.5 text-xs font-mono;
+	}
+
+	.badge-warning {
+		@apply bg-yellow-500/20 text-yellow-400 border border-yellow-500/30 px-2 py-0.5 text-xs font-mono;
+	}
+
+	/* Cards */
+	.card {
+		@apply bg-gray-900 border border-gray-800 p-4;
+	}
+
+	.card-breach {
+		@apply bg-gray-900 border-l-4 border-l-breach-500 border-y border-r border-gray-800 p-4;
+	}
+
+	.card-secure {
+		@apply bg-gray-900 border-l-4 border-l-secure-500 border-y border-r border-gray-800 p-4;
+	}
+
+	/* Buttons */
+	.btn {
+		@apply px-4 py-2 font-mono text-sm transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+	}
+
+	.btn-primary {
+		@apply btn bg-shield-600 hover:bg-shield-700 text-white;
+	}
+
+	.btn-danger {
+		@apply btn bg-breach-600 hover:bg-breach-700 text-white;
+	}
+
+	.btn-secondary {
+		@apply btn bg-gray-800 hover:bg-gray-700 text-gray-100 border border-gray-700;
+	}
+
+	/* Code blocks */
+	.code-block {
+		@apply bg-gray-950 border border-gray-800 p-4 font-mono text-sm overflow-x-auto;
+	}
+
+	/* Attack surface map */
+	.attack-category {
+		@apply p-4 text-center border border-gray-800 transition-colors cursor-pointer;
+	}
+
+	.attack-category.breached {
+		@apply bg-breach-500/10 border-breach-500/50;
+	}
+
+	.attack-category.secure {
+		@apply bg-secure-500/10 border-secure-500/50;
+	}
+
+	.attack-category.warning {
+		@apply bg-yellow-500/10 border-yellow-500/50;
+	}
+}
