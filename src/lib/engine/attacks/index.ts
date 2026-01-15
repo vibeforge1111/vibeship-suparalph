@@ -4,6 +4,8 @@
  */
 
 import type { AttackVector } from '$lib/types/attacks';
+
+// Core attacks
 import { rlsAttacks } from './rls-attacks';
 import { rlsAdvancedAttacks } from './rls-advanced-attacks';
 import { authAttacks } from './auth-attacks';
@@ -22,27 +24,66 @@ import { injectionAttacks } from './injection-attacks';
 import { businessLogicAttacks } from './business-logic-attacks';
 import { dosAttacks } from './dos-attacks';
 
+// NEW: Advanced attack modules
+import { graphqlAttacks } from './graphql-attacks';
+import { vaultAttacks } from './vault-attacks';
+import { multiTenantAttacks } from './multi-tenant-attacks';
+import { authEdgeAttacks } from './auth-edge-attacks';
+import { postgrestAdvancedAttacks } from './postgrest-advanced-attacks';
+import { scheduledJobAttacks } from './scheduled-job-attacks';
+import { webhookAttacks } from './webhook-attacks';
+import { extensionAttacks } from './extension-attacks';
+import { realtimeAdvancedAttacks } from './realtime-advanced-attacks';
+import { storageTransformAttacks } from './storage-transform-attacks';
+import { managementApiAttacks } from './management-api-attacks';
+
 /**
- * All attack vectors
+ * All attack vectors - 150+ comprehensive attacks
  */
 export const ALL_ATTACKS: AttackVector[] = [
+	// Core RLS attacks
 	...rlsAttacks,
 	...rlsAdvancedAttacks,
+
+	// Auth attacks
 	...authAttacks,
 	...authAdvancedAttacks,
+	...authEdgeAttacks,
+
+	// Storage attacks
 	...storageAttacks,
 	...storageAdvancedAttacks,
+	...storageTransformAttacks,
+
+	// Functions & Realtime
 	...functionsAttacks,
 	...realtimeAttacks,
+	...realtimeAdvancedAttacks,
+
+	// Vibecoder attacks
 	...vibecoderAttacks,
 	...vibecoderAdvancedAttacks,
+
+	// API & Database
 	...apiAttacks,
 	...databaseAttacks,
+	...postgrestAdvancedAttacks,
+
+	// Infrastructure & Security
 	...infrastructureAttacks,
 	...dataExposureAttacks,
 	...injectionAttacks,
 	...businessLogicAttacks,
-	...dosAttacks
+	...dosAttacks,
+
+	// NEW: Advanced attack categories
+	...graphqlAttacks,
+	...vaultAttacks,
+	...multiTenantAttacks,
+	...scheduledJobAttacks,
+	...webhookAttacks,
+	...extensionAttacks,
+	...managementApiAttacks
 ];
 
 /**
@@ -57,6 +98,24 @@ export function getAttacksByCategory(category: string): AttackVector[] {
  */
 export function getAttackById(id: string): AttackVector | undefined {
 	return ALL_ATTACKS.find((a) => a.id === id);
+}
+
+/**
+ * Get attack count by category
+ */
+export function getAttackCountByCategory(): Record<string, number> {
+	const counts: Record<string, number> = {};
+	for (const attack of ALL_ATTACKS) {
+		counts[attack.category] = (counts[attack.category] || 0) + 1;
+	}
+	return counts;
+}
+
+/**
+ * Get total attack count
+ */
+export function getTotalAttackCount(): number {
+	return ALL_ATTACKS.length;
 }
 
 // Re-export individual modules
@@ -77,3 +136,16 @@ export { dataExposureAttacks } from './data-exposure-attacks';
 export { injectionAttacks } from './injection-attacks';
 export { businessLogicAttacks } from './business-logic-attacks';
 export { dosAttacks } from './dos-attacks';
+
+// NEW exports
+export { graphqlAttacks } from './graphql-attacks';
+export { vaultAttacks } from './vault-attacks';
+export { multiTenantAttacks } from './multi-tenant-attacks';
+export { authEdgeAttacks } from './auth-edge-attacks';
+export { postgrestAdvancedAttacks } from './postgrest-advanced-attacks';
+export { scheduledJobAttacks } from './scheduled-job-attacks';
+export { webhookAttacks } from './webhook-attacks';
+export { extensionAttacks } from './extension-attacks';
+export { realtimeAdvancedAttacks } from './realtime-advanced-attacks';
+export { storageTransformAttacks } from './storage-transform-attacks';
+export { managementApiAttacks } from './management-api-attacks';
