@@ -70,10 +70,21 @@
 
 	<!-- Footer - Also hidden on landing page -->
 	{#if !isLandingPage}
-		<footer class="border-t border-gray-800 py-4 text-center text-sm text-gray-500 bg-surface-800">
-			<p><span class="text-supa-400">Supa</span>Ralph - Active Penetration Testing for Supabase</p>
-			<p class="text-xs mt-1 text-gray-600">Don't guess what's broken. <span class="text-breach-400">Break it and prove it.</span></p>
-			<p class="text-xs mt-2 text-gray-700">For authorized testing only. Only scan projects you own or have permission to test.</p>
+		<footer class="border-t border-gray-800 py-6 bg-surface-800">
+			<div class="max-w-7xl mx-auto px-4">
+				<div class="flex flex-col md:flex-row items-center justify-between gap-4">
+					<div class="text-center md:text-left">
+						<p class="text-sm text-gray-500"><span class="text-supa-400">Supa</span>Ralph - Active Penetration Testing for Supabase</p>
+						<p class="text-xs mt-1 text-gray-600">Don't guess what's broken. <span class="text-breach-400">Break it and prove it.</span></p>
+					</div>
+					<div class="flex items-center gap-6 text-xs">
+						<a href="/terms" class="text-gray-500 hover:text-supa-400 transition-colors">Terms of Service</a>
+						<a href="/privacy" class="text-gray-500 hover:text-supa-400 transition-colors">Privacy Policy</a>
+						<a href="https://github.com/vibeforge1111/vibeship-supascanner" target="_blank" class="text-gray-500 hover:text-white transition-colors">GitHub</a>
+					</div>
+				</div>
+				<p class="text-xs mt-4 text-center text-gray-700">For authorized testing only. Only scan projects you own or have permission to test.</p>
+			</div>
 		</footer>
 	{/if}
 </div>

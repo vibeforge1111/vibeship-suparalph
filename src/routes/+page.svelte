@@ -570,3 +570,37 @@
 		</div>
 	</div>
 </section>
+
+<!-- Landing Page Footer -->
+<footer class="bg-surface-800 border-t border-gray-800 py-8 px-4">
+	<div class="max-w-6xl mx-auto">
+		<div class="flex flex-col md:flex-row items-center justify-between gap-6">
+			<!-- Brand -->
+			<div class="flex items-center gap-2">
+				<span class="text-2xl text-supa-400 font-bold">◈</span>
+				<span class="font-bold text-xl tracking-tight">
+					<span class="text-supa-400">Supa</span><span class="text-white">Ralph</span>
+				</span>
+			</div>
+
+			<!-- Links -->
+			<div class="flex flex-wrap items-center justify-center gap-6 text-sm">
+				<a href="/terms" class="text-gray-400 hover:text-supa-400 transition-colors">Terms of Service</a>
+				<a href="/privacy" class="text-gray-400 hover:text-supa-400 transition-colors">Privacy Policy</a>
+				<a href="/dashboard" class="text-gray-400 hover:text-supa-400 transition-colors">Dashboard</a>
+				<a href="/attacks" class="text-gray-400 hover:text-supa-400 transition-colors">252 Attacks</a>
+				<a href="https://github.com/vibeforge1111/vibeship-supascanner" target="_blank" class="text-gray-400 hover:text-white transition-colors">GitHub</a>
+			</div>
+		</div>
+
+		<!-- Bottom -->
+		<div class="mt-8 pt-6 border-t border-gray-800 text-center">
+			<p class="text-xs text-gray-600">
+				SupaRalph is a security testing tool. Use responsibly and only on systems you own or have permission to test.
+			</p>
+			<p class="text-xs text-gray-700 mt-2">
+				By using this tool, you agree to our <a href="/terms" class="text-supa-500 hover:text-supa-400">Terms of Service</a> and <a href="/privacy" class="text-supa-500 hover:text-supa-400">Privacy Policy</a>.
+			</p>
+		</div>
+	</div>
+</footer>
