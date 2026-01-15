@@ -82,9 +82,17 @@ export default {
 				'fade-in': 'fade-in 1s ease-out',
 				'danger-pulse': 'danger-pulse 1.5s ease-in-out infinite',
 				'scan-line': 'scan-line 2s linear infinite',
+				'scan-line-vertical': 'scan-line-vertical 2.5s linear infinite',
 				'glitch': 'glitch 0.3s ease-in-out infinite',
 				'typing': 'typing 3.5s steps(40, end)',
 				'blink': 'blink 1s step-end infinite',
+				// Laser animations
+				'laser-horizontal': 'laser-horizontal 3s linear infinite',
+				'laser-horizontal-reverse': 'laser-horizontal-reverse 3.5s linear infinite',
+				'laser-vertical': 'laser-vertical 4s linear infinite',
+				'laser-vertical-reverse': 'laser-vertical-reverse 3.5s linear infinite',
+				'laser-diagonal': 'laser-diagonal 5s linear infinite',
+				'laser-diagonal-reverse': 'laser-diagonal-reverse 6s linear infinite',
 			},
 			keyframes: {
 				float: {
@@ -138,6 +146,35 @@ export default {
 				},
 				blink: {
 					'50%': { borderColor: 'transparent' },
+				},
+				// Laser keyframes
+				'scan-line-vertical': {
+					'0%': { transform: 'translateX(-100%)' },
+					'100%': { transform: 'translateX(400%)' },
+				},
+				'laser-horizontal': {
+					'0%': { transform: 'translateX(-100%)' },
+					'100%': { transform: 'translateX(calc(100vw + 100%))' },
+				},
+				'laser-horizontal-reverse': {
+					'0%': { transform: 'translateX(100vw)' },
+					'100%': { transform: 'translateX(-100%)' },
+				},
+				'laser-vertical': {
+					'0%': { transform: 'translateY(-100%)' },
+					'100%': { transform: 'translateY(100vh)' },
+				},
+				'laser-vertical-reverse': {
+					'0%': { transform: 'translateY(100vh)' },
+					'100%': { transform: 'translateY(-100%)' },
+				},
+				'laser-diagonal': {
+					'0%': { transform: 'translateX(-50%) translateY(-50%)' },
+					'100%': { transform: 'translateX(100vw) translateY(100vh)' },
+				},
+				'laser-diagonal-reverse': {
+					'0%': { transform: 'translateX(100vw) translateY(-50%)' },
+					'100%': { transform: 'translateX(-50%) translateY(100vh)' },
 				},
 			},
 			// Vibeship: No rounded corners

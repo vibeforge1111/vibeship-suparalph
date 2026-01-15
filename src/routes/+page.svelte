@@ -133,9 +133,35 @@
 		<div class="absolute inset-0" style="background-image: linear-gradient(rgba(62, 207, 142, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(62, 207, 142, 0.1) 1px, transparent 1px); background-size: 50px 50px;"></div>
 	</div>
 
-	<!-- Scan Lines Effect -->
-	<div class="absolute inset-0 pointer-events-none overflow-hidden">
-		<div class="absolute inset-0 opacity-5 animate-scan-line bg-gradient-to-b from-transparent via-vibe-400 to-transparent h-32"></div>
+	<!-- LASER SECURITY BREACH EFFECTS -->
+	<!-- Horizontal Green Laser - Top -->
+	<div class="absolute top-0 left-0 w-full h-[2px] overflow-hidden">
+		<div class="absolute w-32 h-full bg-gradient-to-r from-transparent via-supa-400 to-transparent animate-laser-horizontal"></div>
+	</div>
+	<!-- Horizontal Red Laser - Bottom -->
+	<div class="absolute bottom-0 left-0 w-full h-[2px] overflow-hidden">
+		<div class="absolute w-32 h-full bg-gradient-to-r from-transparent via-breach-500 to-transparent animate-laser-horizontal-reverse"></div>
+	</div>
+	<!-- Vertical Green Laser - Left -->
+	<div class="absolute top-0 left-0 h-full w-[2px] overflow-hidden">
+		<div class="absolute h-32 w-full bg-gradient-to-b from-transparent via-supa-400 to-transparent animate-laser-vertical"></div>
+	</div>
+	<!-- Vertical Red Laser - Right -->
+	<div class="absolute top-0 right-0 h-full w-[2px] overflow-hidden">
+		<div class="absolute h-32 w-full bg-gradient-to-b from-transparent via-breach-500 to-transparent animate-laser-vertical-reverse"></div>
+	</div>
+
+	<!-- Diagonal Laser Sweeps -->
+	<div class="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
+		<div class="absolute w-[200%] h-[2px] bg-gradient-to-r from-transparent via-supa-500 to-transparent origin-left rotate-45 animate-laser-diagonal"></div>
+	</div>
+	<div class="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
+		<div class="absolute w-[200%] h-[2px] bg-gradient-to-r from-transparent via-breach-500 to-transparent origin-right -rotate-45 animate-laser-diagonal-reverse"></div>
+	</div>
+
+	<!-- Scanning Grid Pulse -->
+	<div class="absolute inset-0 pointer-events-none">
+		<div class="absolute inset-0 bg-gradient-to-b from-supa-500/5 via-transparent to-breach-500/5 animate-pulse"></div>
 	</div>
 
 	<!-- Main Hero Content -->
@@ -143,9 +169,16 @@
 
 		<!-- Ralph Wiggum Image with Effects -->
 		<div class="relative mb-8">
-			<!-- Danger Glow Ring -->
+			<!-- Animated Laser Border Frame -->
 			<div class="absolute -inset-4 border-2 border-breach-500 animate-danger-pulse"></div>
-			<div class="absolute -inset-8 border border-breach-500/30 animate-danger-pulse" style="animation-delay: 0.5s;"></div>
+			<div class="absolute -inset-8 border border-supa-500/30 animate-danger-pulse" style="animation-delay: 0.5s;"></div>
+			<div class="absolute -inset-12 border border-breach-500/20 animate-danger-pulse" style="animation-delay: 1s;"></div>
+
+			<!-- Corner Laser Points -->
+			<div class="absolute -top-4 -left-4 w-3 h-3 bg-supa-400 animate-pulse shadow-lg shadow-supa-400/50"></div>
+			<div class="absolute -top-4 -right-4 w-3 h-3 bg-breach-500 animate-pulse shadow-lg shadow-breach-500/50" style="animation-delay: 0.25s;"></div>
+			<div class="absolute -bottom-4 -left-4 w-3 h-3 bg-breach-500 animate-pulse shadow-lg shadow-breach-500/50" style="animation-delay: 0.5s;"></div>
+			<div class="absolute -bottom-4 -right-4 w-3 h-3 bg-supa-400 animate-pulse shadow-lg shadow-supa-400/50" style="animation-delay: 0.75s;"></div>
 
 			<!-- The Ralph -->
 			<div class="relative group">
@@ -160,14 +193,19 @@
 					<div class="absolute inset-0 bg-breach-500/20 mix-blend-overlay animate-glitch"></div>
 				</div>
 
-				<!-- Scan Line Overlay -->
+				<!-- Horizontal Scan Line -->
 				<div class="absolute inset-0 overflow-hidden pointer-events-none">
-					<div class="absolute w-full h-1 bg-gradient-to-r from-transparent via-vibe-400 to-transparent animate-scan-line"></div>
+					<div class="absolute w-full h-[2px] bg-gradient-to-r from-transparent via-supa-400 to-transparent animate-scan-line shadow-lg shadow-supa-400/50"></div>
+				</div>
+
+				<!-- Vertical Scan Line -->
+				<div class="absolute inset-0 overflow-hidden pointer-events-none">
+					<div class="absolute h-full w-[2px] bg-gradient-to-b from-transparent via-breach-500 to-transparent animate-scan-line-vertical shadow-lg shadow-breach-500/50"></div>
 				</div>
 			</div>
 
-			<!-- "I'm in danger" Speech Bubble -->
-			<div class="absolute -top-4 -right-4 md:-right-8 bg-white text-black px-4 py-2 font-bold text-sm md:text-base shadow-lg transform rotate-3 animate-pulse">
+			<!-- "I'm in danger" Speech Bubble - NO ANIMATION -->
+			<div class="absolute -top-4 -right-4 md:-right-8 bg-white text-black px-4 py-2 font-bold text-sm md:text-base shadow-lg transform rotate-3">
 				<span class="text-breach-600">"I'm in danger!"</span>
 				<div class="absolute -bottom-2 left-4 w-0 h-0 border-l-8 border-r-8 border-t-8 border-l-transparent border-r-transparent border-t-white"></div>
 			</div>
