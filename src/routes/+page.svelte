@@ -412,7 +412,7 @@
 							<button
 								onclick={startScan}
 								disabled={!scanUrl || isScanning}
-								class="px-6 py-3 bg-breach-600 hover:bg-breach-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-bold transition-all hover:shadow-lg hover:shadow-breach-500/30"
+								class="px-6 py-3 bg-breach-600 hover:bg-breach-500 disabled:bg-breach-900 disabled:text-breach-400 disabled:cursor-not-allowed text-white font-bold transition-all hover:shadow-lg hover:shadow-breach-500/30 border border-breach-500 disabled:border-breach-700"
 							>
 								{isScanning ? 'SCANNING...' : 'BREACH TEST'}
 							</button>
