@@ -47,6 +47,12 @@ import { postgrestEdgeAttacks } from './postgrest-edge-attacks';
 import { backupRecoveryAttacks } from './backup-recovery-attacks';
 import { loggingAttacks } from './logging-attacks';
 
+// NEW: Critical security attack modules (Round 3)
+import { serviceRoleAttacks } from './service-role-attacks';
+import { credentialsScannerAttacks } from './credentials-scanner-attacks';
+import { rlsAnalyzerAttacks } from './rls-analyzer-attacks';
+import { authEdgeCasesAttacks } from './auth-edge-cases-attacks';
+
 /**
  * All attack vectors - 250+ comprehensive attacks
  */
@@ -103,7 +109,13 @@ export const ALL_ATTACKS: AttackVector[] = [
 	...aiVectorAttacks,
 	...postgrestEdgeAttacks,
 	...backupRecoveryAttacks,
-	...loggingAttacks
+	...loggingAttacks,
+
+	// NEW: Critical security attacks (Round 3)
+	...serviceRoleAttacks,
+	...credentialsScannerAttacks,
+	...rlsAnalyzerAttacks,
+	...authEdgeCasesAttacks
 ];
 
 /**
@@ -179,3 +191,9 @@ export { aiVectorAttacks } from './ai-vector-attacks';
 export { postgrestEdgeAttacks } from './postgrest-edge-attacks';
 export { backupRecoveryAttacks } from './backup-recovery-attacks';
 export { loggingAttacks } from './logging-attacks';
+
+// NEW exports (Round 3 - Critical Security)
+export { serviceRoleAttacks } from './service-role-attacks';
+export { credentialsScannerAttacks } from './credentials-scanner-attacks';
+export { rlsAnalyzerAttacks } from './rls-analyzer-attacks';
+export { authEdgeCasesAttacks } from './auth-edge-cases-attacks';

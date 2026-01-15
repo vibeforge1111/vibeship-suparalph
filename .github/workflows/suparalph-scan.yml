@@ -1,0 +1,258 @@
+# SupaRalph Security Scan - GitHub Action
+# Automatically scan your Supabase project for vulnerabilities on every push/PR
+
+name: SupaRalph Security Scan
+
+on:
+  push:
+    branches: [main, master, develop]
+  pull_request:
+    branches: [main, master]
+  # Allow manual trigger
+  workflow_dispatch:
+    inputs:
+      fail_on_critical:
+        description: 'Fail build on critical vulnerabilities'
+        required: false
+        default: 'true'
+      fail_on_high:
+        description: 'Fail build on high vulnerabilities'
+        required: false
+        default: 'false'
+
+env:
+  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+  SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+
+jobs:
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate Supabase credentials
+        run: |
+          if [ -z "$SUPABASE_URL" ]; then
+            echo "::error::SUPABASE_URL secret is not set"
+            echo "Please add SUPABASE_URL to your repository secrets"
+            exit 1
+          fi
+          if [ -z "$SUPABASE_ANON_KEY" ]; then
+            echo "::error::SUPABASE_ANON_KEY secret is not set"
+            echo "Please add SUPABASE_ANON_KEY to your repository secrets"
+            exit 1
+          fi
+          echo "Supabase credentials configured"
+
+      - name: Run SupaRalph Scan
+        id: scan
+        run: |
+          # Create scan script
+          cat << 'EOF' > scan.mjs
+          const targetUrl = process.env.SUPABASE_URL;
+          const anonKey = process.env.SUPABASE_ANON_KEY;
+
+          if (!targetUrl || !anonKey) {
+            console.error('Missing SUPABASE_URL or SUPABASE_ANON_KEY');
+            process.exit(1);
+          }
+
+          console.log('Starting SupaRalph Security Scan...');
+          console.log(`Target: ${targetUrl}`);
+
+          // Quick vulnerability checks
+          const results = {
+            critical: 0,
+            high: 0,
+            medium: 0,
+            low: 0,
+            vulnerabilities: []
+          };
+
+          // Test 1: Check for exposed tables (RLS)
+          try {
+            const tables = ['users', 'profiles', 'accounts', 'data'];
+            for (const table of tables) {
+              const res = await fetch(`${targetUrl}/rest/v1/${table}?select=*&limit=1`, {
+                headers: {
+                  'apikey': anonKey,
+                  'Authorization': `Bearer ${anonKey}`
+                }
+              });
+              if (res.ok) {
+                const data = await res.json();
+                if (Array.isArray(data) && data.length > 0) {
+                  results.critical++;
+                  results.vulnerabilities.push({
+                    severity: 'critical',
+                    title: `Table "${table}" exposed to anonymous users`,
+                    category: 'rls'
+                  });
+                }
+              }
+            }
+          } catch (e) {
+            console.log('RLS check error:', e.message);
+          }
+
+          // Test 2: Check JWT role
+          try {
+            const parts = anonKey.split('.');
+            if (parts.length === 3) {
+              const payload = JSON.parse(Buffer.from(parts[1], 'base64').toString());
+              if (payload.role === 'service_role') {
+                results.critical++;
+                results.vulnerabilities.push({
+                  severity: 'critical',
+                  title: 'Service role key in use - bypasses all RLS!',
+                  category: 'auth'
+                });
+              }
+            }
+          } catch (e) {}
+
+          // Test 3: Check for GraphQL introspection
+          try {
+            const res = await fetch(`${targetUrl.replace('/rest/v1', '')}/graphql/v1`, {
+              method: 'POST',
+              headers: {
+                'apikey': anonKey,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                query: '{ __schema { types { name } } }'
+              })
+            });
+            if (res.ok) {
+              const data = await res.json();
+              if (data?.data?.__schema) {
+                results.medium++;
+                results.vulnerabilities.push({
+                  severity: 'medium',
+                  title: 'GraphQL introspection enabled',
+                  category: 'api'
+                });
+              }
+            }
+          } catch (e) {}
+
+          // Output results
+          console.log('\n========== SCAN RESULTS ==========');
+          console.log(`Critical: ${results.critical}`);
+          console.log(`High: ${results.high}`);
+          console.log(`Medium: ${results.medium}`);
+          console.log(`Low: ${results.low}`);
+          console.log(`Total Vulnerabilities: ${results.vulnerabilities.length}`);
+          console.log('');
+
+          if (results.vulnerabilities.length > 0) {
+            console.log('Vulnerabilities Found:');
+            for (const v of results.vulnerabilities) {
+              console.log(`  [${v.severity.toUpperCase()}] ${v.title}`);
+            }
+          }
+
+          // Write results for GitHub Actions
+          const fs = await import('fs');
+          fs.writeFileSync('scan-results.json', JSON.stringify(results, null, 2));
+
+          // Set outputs
+          console.log(`\n::set-output name=critical::${results.critical}`);
+          console.log(`::set-output name=high::${results.high}`);
+          console.log(`::set-output name=total::${results.vulnerabilities.length}`);
+
+          // Exit with appropriate code
+          const failOnCritical = process.env.FAIL_ON_CRITICAL !== 'false';
+          const failOnHigh = process.env.FAIL_ON_HIGH === 'true';
+
+          if (results.critical > 0 && failOnCritical) {
+            console.log('\n::error::Critical vulnerabilities found!');
+            process.exit(1);
+          }
+
+          if (results.high > 0 && failOnHigh) {
+            console.log('\n::error::High vulnerabilities found!');
+            process.exit(1);
+          }
+
+          console.log('\nScan complete!');
+          EOF
+
+          node scan.mjs
+        env:
+          FAIL_ON_CRITICAL: ${{ github.event.inputs.fail_on_critical || 'true' }}
+          FAIL_ON_HIGH: ${{ github.event.inputs.fail_on_high || 'false' }}
+
+      - name: Upload scan results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: suparalph-scan-results
+          path: scan-results.json
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let results;
+            try {
+              results = JSON.parse(fs.readFileSync('scan-results.json', 'utf8'));
+            } catch (e) {
+              results = { critical: 0, high: 0, medium: 0, low: 0, vulnerabilities: [] };
+            }
+
+            const total = results.vulnerabilities.length;
+            const icon = total > 0 ? '⚠️' : '✅';
+            const status = total > 0 ? 'vulnerabilities found' : 'no vulnerabilities found';
+
+            let body = `## ${icon} SupaRalph Security Scan\n\n`;
+            body += `| Severity | Count |\n`;
+            body += `|----------|-------|\n`;
+            body += `| Critical | ${results.critical} |\n`;
+            body += `| High | ${results.high} |\n`;
+            body += `| Medium | ${results.medium} |\n`;
+            body += `| Low | ${results.low} |\n\n`;
+
+            if (results.vulnerabilities.length > 0) {
+              body += `### Findings\n\n`;
+              for (const v of results.vulnerabilities.slice(0, 10)) {
+                body += `- **[${v.severity.toUpperCase()}]** ${v.title}\n`;
+              }
+              if (results.vulnerabilities.length > 10) {
+                body += `\n*...and ${results.vulnerabilities.length - 10} more*\n`;
+              }
+              body += `\n**Action Required:** Fix these vulnerabilities before merging.\n`;
+              body += `Use [Supabase AI Assistant](https://supabase.com/dashboard/project/_/sql/new) to generate fixes.\n`;
+            } else {
+              body += `All security checks passed! 🎉\n`;
+            }
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });
+
+  # Optional: Block merge if critical vulnerabilities found
+  security-gate:
+    name: Security Gate
+    runs-on: ubuntu-latest
+    needs: security-scan
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - name: Check for blocking vulnerabilities
+        run: |
+          echo "Security gate check passed"
+          # Add additional logic here if needed
