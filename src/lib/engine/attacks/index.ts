@@ -37,8 +37,18 @@ import { realtimeAdvancedAttacks } from './realtime-advanced-attacks';
 import { storageTransformAttacks } from './storage-transform-attacks';
 import { managementApiAttacks } from './management-api-attacks';
 
+// NEW: Deep attack modules (Round 2)
+import { edgeFunctionsDeepAttacks } from './edge-functions-deep-attacks';
+import { authProviderAttacks } from './auth-provider-attacks';
+import { databaseDeepAttacks } from './database-deep-attacks';
+import { networkAttacks } from './network-attacks';
+import { aiVectorAttacks } from './ai-vector-attacks';
+import { postgrestEdgeAttacks } from './postgrest-edge-attacks';
+import { backupRecoveryAttacks } from './backup-recovery-attacks';
+import { loggingAttacks } from './logging-attacks';
+
 /**
- * All attack vectors - 150+ comprehensive attacks
+ * All attack vectors - 250+ comprehensive attacks
  */
 export const ALL_ATTACKS: AttackVector[] = [
 	// Core RLS attacks
@@ -83,7 +93,17 @@ export const ALL_ATTACKS: AttackVector[] = [
 	...scheduledJobAttacks,
 	...webhookAttacks,
 	...extensionAttacks,
-	...managementApiAttacks
+	...managementApiAttacks,
+
+	// NEW: Deep attack categories (Round 2)
+	...edgeFunctionsDeepAttacks,
+	...authProviderAttacks,
+	...databaseDeepAttacks,
+	...networkAttacks,
+	...aiVectorAttacks,
+	...postgrestEdgeAttacks,
+	...backupRecoveryAttacks,
+	...loggingAttacks
 ];
 
 /**
@@ -149,3 +169,13 @@ export { extensionAttacks } from './extension-attacks';
 export { realtimeAdvancedAttacks } from './realtime-advanced-attacks';
 export { storageTransformAttacks } from './storage-transform-attacks';
 export { managementApiAttacks } from './management-api-attacks';
+
+// NEW exports (Round 2)
+export { edgeFunctionsDeepAttacks } from './edge-functions-deep-attacks';
+export { authProviderAttacks } from './auth-provider-attacks';
+export { databaseDeepAttacks } from './database-deep-attacks';
+export { networkAttacks } from './network-attacks';
+export { aiVectorAttacks } from './ai-vector-attacks';
+export { postgrestEdgeAttacks } from './postgrest-edge-attacks';
+export { backupRecoveryAttacks } from './backup-recovery-attacks';
+export { loggingAttacks } from './logging-attacks';
