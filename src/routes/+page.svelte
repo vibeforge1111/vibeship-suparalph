@@ -484,10 +484,10 @@
 <section class="bg-surface-800 py-20 px-4">
 	<div class="max-w-6xl mx-auto">
 		<h2 class="text-3xl font-bold text-center mb-4">
-			<span class="text-supa-400">10</span> Attack Scenarios
+			<span class="text-supa-400">10</span> Attack Categories. <span class="text-breach-400">250+</span> Attack Vectors.
 		</h2>
 		<p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
-			Comprehensive coverage of every Supabase attack surface. Each scenario contains multiple attack vectors tested against real vulnerabilities.
+			Comprehensive coverage of every Supabase attack surface. Each category contains multiple attack vectors tested against real vulnerabilities.
 		</p>
 
 		<div class="grid md:grid-cols-2 lg:grid-cols-5 gap-4">
