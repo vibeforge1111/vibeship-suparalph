@@ -1,5 +1,5 @@
 /**
- * SupaShield Attack Playbook
+ * SupaRalph Attack Playbook
  * Complete collection of attack vectors for all categories
  */
 

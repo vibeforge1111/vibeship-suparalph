@@ -14,8 +14,8 @@
 		<div class="flex items-center justify-between">
 			<!-- Logo -->
 			<a href="/" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
-				<span class="text-xl">🛡️</span>
-				<span class="font-bold text-lg">SupaShield</span>
+				<span class="text-2xl text-supa-400 font-bold">◈</span>
+				<span class="font-bold text-lg"><span class="text-supa-400">Supa</span><span class="text-white">Ralph</span></span>
 			</a>
 
 			<!-- Nav Links -->

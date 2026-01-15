@@ -1,6 +1,10 @@
 /**
- * SupaShield Scan API - Real breach testing endpoint
+ * SupaRalph Scan API - Real breach testing endpoint
  * Runs the Ralph Wiggum loop against target Supabase
+ *
+ * RATE LIMITING: Prevents abuse by limiting requests per IP
+ * - 5 scans per IP per 15 minutes for POST (full scan)
+ * - 10 scans per IP per 15 minutes for GET (SSE streaming)
  */
 
 import { json } from '@sveltejs/kit';
@@ -8,7 +12,76 @@ import type { RequestHandler } from './$types';
 import { BreachEngine } from '$lib/engine/breach-engine';
 import { ALL_ATTACKS, getTotalAttackCount } from '$lib/engine/attacks';
 
+// In-memory rate limiter (resets on server restart)
+const rateLimitStore = new Map<string, { count: number; resetAt: number }>();
+
+const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
+const POST_RATE_LIMIT = 5; // 5 full scans per window
+const GET_RATE_LIMIT = 10; // 10 SSE scans per window
+
+function getRateLimitKey(ip: string, method: string): string {
+	return `${ip}:${method}`;
+}
+
+function checkRateLimit(ip: string, method: string): { allowed: boolean; remaining: number; resetIn: number } {
+	const key = getRateLimitKey(ip, method);
+	const now = Date.now();
+	const limit = method === 'POST' ? POST_RATE_LIMIT : GET_RATE_LIMIT;
+
+	const entry = rateLimitStore.get(key);
+
+	// No entry or window expired - create new entry
+	if (!entry || now > entry.resetAt) {
+		rateLimitStore.set(key, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
+		return { allowed: true, remaining: limit - 1, resetIn: RATE_LIMIT_WINDOW };
+	}
+
+	// Within window - check count
+	if (entry.count >= limit) {
+		return { allowed: false, remaining: 0, resetIn: entry.resetAt - now };
+	}
+
+	// Increment count
+	entry.count++;
+	return { allowed: true, remaining: limit - entry.count, resetIn: entry.resetAt - now };
+}
+
+function getClientIP(request: Request): string {
+	// Check common headers for real IP (when behind proxy/CDN)
+	const forwarded = request.headers.get('x-forwarded-for');
+	if (forwarded) {
+		return forwarded.split(',')[0].trim();
+	}
+	const realIP = request.headers.get('x-real-ip');
+	if (realIP) {
+		return realIP;
+	}
+	// Fallback - will be 127.0.0.1 in dev
+	return 'unknown';
+}
+
 export const POST: RequestHandler = async ({ request }) => {
+	// Rate limit check
+	const clientIP = getClientIP(request);
+	const rateLimit = checkRateLimit(clientIP, 'POST');
+
+	if (!rateLimit.allowed) {
+		return json(
+			{
+				error: 'Rate limit exceeded. Please wait before scanning again.',
+				retryAfter: Math.ceil(rateLimit.resetIn / 1000)
+			},
+			{
+				status: 429,
+				headers: {
+					'Retry-After': String(Math.ceil(rateLimit.resetIn / 1000)),
+					'X-RateLimit-Remaining': '0',
+					'X-RateLimit-Reset': String(Math.ceil(rateLimit.resetIn / 1000))
+				}
+			}
+		);
+	}
+
 	try {
 		const body = await request.json();
 		const { targetUrl, anonKey, serviceKey } = body;
@@ -82,7 +155,28 @@ export const POST: RequestHandler = async ({ request }) => {
 /**
  * GET endpoint for Server-Sent Events (streaming progress)
  */
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async ({ url, request }) => {
+	// Rate limit check
+	const clientIP = getClientIP(request);
+	const rateLimit = checkRateLimit(clientIP, 'GET');
+
+	if (!rateLimit.allowed) {
+		return json(
+			{
+				error: 'Rate limit exceeded. Please wait before scanning again.',
+				retryAfter: Math.ceil(rateLimit.resetIn / 1000)
+			},
+			{
+				status: 429,
+				headers: {
+					'Retry-After': String(Math.ceil(rateLimit.resetIn / 1000)),
+					'X-RateLimit-Remaining': '0',
+					'X-RateLimit-Reset': String(Math.ceil(rateLimit.resetIn / 1000))
+				}
+			}
+		);
+	}
+
 	const targetUrl = url.searchParams.get('targetUrl');
 	const anonKey = url.searchParams.get('anonKey') || '';
 

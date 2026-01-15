@@ -41,7 +41,7 @@
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
 		a.href = url;
-		a.download = `supashield-fixes-${new Date().toISOString().split('T')[0]}.sql`;
+		a.download = `suparalph-fixes-${new Date().toISOString().split('T')[0]}.sql`;
 		a.click();
 		URL.revokeObjectURL(url);
 	}
@@ -116,7 +116,7 @@
 </script>
 
 <svelte:head>
-	<title>Dashboard - SupaShield</title>
+	<title>Dashboard - SupaRalph</title>
 </svelte:head>
 
 <div class="max-w-6xl mx-auto px-4 py-8">

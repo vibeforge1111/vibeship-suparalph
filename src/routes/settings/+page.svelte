@@ -109,7 +109,7 @@
 </script>
 
 <svelte:head>
-	<title>Settings - SupaShield</title>
+	<title>Settings - SupaRalph</title>
 </svelte:head>
 
 <div class="max-w-4xl mx-auto px-4 py-8">

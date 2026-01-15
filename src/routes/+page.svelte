@@ -6,7 +6,7 @@
 	let scanProgress = $state(0);
 	let attacksFound = $state(0);
 	let attacksCompleted = $state(0);
-	let totalAttacks = $state(252);
+	let totalAttacks = $state(277);
 	let currentAttack = $state('');
 	let scanComplete = $state(false);
 	let scanError = $state('');
@@ -52,7 +52,7 @@
 			{ text: `$ suparalph scan demo.supabase.co`, type: 'command' },
 			{ text: 'Initializing SupaRalph v1.0.0...', type: 'info' },
 			{ text: '[DEMO MODE] Simulating vulnerability scan...', type: 'warning' },
-			{ text: 'Loading 252 attack vectors...', type: 'info' },
+			{ text: 'Loading 277 attack vectors...', type: 'info' },
 			{ text: '> Starting breach test...', type: 'warning' }
 		];
 
@@ -125,7 +125,7 @@
 		terminalLines = [
 			{ text: `$ suparalph scan ${scanUrl}`, type: 'command' },
 			{ text: 'Initializing SupaRalph v1.0.0...', type: 'info' },
-			{ text: 'Loading 252 attack vectors...', type: 'info' },
+			{ text: 'Loading 277 attack vectors...', type: 'info' },
 			{ text: '> Starting breach test...', type: 'warning' }
 		];
 
@@ -231,7 +231,7 @@
 
 <svelte:head>
 	<title>SupaRalph - "I'm in danger!" - Supabase Penetration Testing</title>
-	<meta name="description" content="AI-powered penetration testing for Supabase. Don't guess what's broken - break it and prove it with 252 attack vectors." />
+	<meta name="description" content="AI-powered penetration testing for Supabase. Don't guess what's broken - break it and prove it with 277 attack vectors." />
 </svelte:head>
 
 <!-- Hero Section with Ralph Wiggum -->
@@ -443,7 +443,7 @@
 				Dashboard
 			</a>
 			<a href="/attacks" class="text-gray-500 hover:text-supa-400 transition-colors">
-				252 Attacks
+				277 Attacks
 			</a>
 			<a href="https://github.com/vibeforge1111/vibeship-supascanner" target="_blank" class="text-gray-500 hover:text-white transition-colors">
 				GitHub
@@ -500,7 +500,7 @@
 				</div>
 				<h3 class="text-xl font-bold mb-2 text-white">Active Breach Testing</h3>
 				<p class="text-gray-400 text-sm">
-					Actually attempts to exploit your Supabase using 252 attack vectors.
+					Actually attempts to exploit your Supabase using 277 attack vectors.
 					No guessing - real proof of vulnerabilities.
 				</p>
 			</div>
@@ -722,18 +722,15 @@
 				<a href="/terms" class="text-gray-400 hover:text-supa-400 transition-colors">Terms of Service</a>
 				<a href="/privacy" class="text-gray-400 hover:text-supa-400 transition-colors">Privacy Policy</a>
 				<a href="/dashboard" class="text-gray-400 hover:text-supa-400 transition-colors">Dashboard</a>
-				<a href="/attacks" class="text-gray-400 hover:text-supa-400 transition-colors">252 Attacks</a>
+				<a href="/attacks" class="text-gray-400 hover:text-supa-400 transition-colors">277 Attacks</a>
 				<a href="https://github.com/vibeforge1111/vibeship-supascanner" target="_blank" class="text-gray-400 hover:text-white transition-colors">GitHub</a>
 			</div>
 		</div>
 
-		<!-- Bottom -->
+		<!-- Copyright -->
 		<div class="mt-8 pt-6 border-t border-gray-800 text-center">
 			<p class="text-xs text-gray-600">
-				SupaRalph is a security testing tool. Use responsibly and only on systems you own or have permission to test.
-			</p>
-			<p class="text-xs text-gray-700 mt-2">
-				By using this tool, you agree to our <a href="/terms" class="text-supa-500 hover:text-supa-400">Terms of Service</a> and <a href="/privacy" class="text-supa-500 hover:text-supa-400">Privacy Policy</a>.
+				© {new Date().getFullYear()} SupaRalph. Open source under MIT License.
 			</p>
 		</div>
 	</div>
