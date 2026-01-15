@@ -511,7 +511,7 @@
 				</div>
 				<h3 class="text-xl font-bold mb-2 text-white">Active Breach Testing</h3>
 				<p class="text-gray-400 text-sm">
-					Actually attempts to exploit your Supabase using {getTotalAttackCount()} attack vectors.
+					Actually attempts to exploit your Supabase with real attack vectors.
 					No guessing - real proof of vulnerabilities.
 				</p>
 			</div>
