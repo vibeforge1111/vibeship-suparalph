@@ -188,9 +188,28 @@ export const GET: RequestHandler = async ({ url, request }) => {
 	const stream = new ReadableStream({
 		async start(controller) {
 			const encoder = new TextEncoder();
+			let isOpen = true;
+
 			const send = (event: string, data: any) => {
-				controller.enqueue(encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`));
+				if (!isOpen) return;
+				try {
+					controller.enqueue(encoder.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`));
+				} catch {
+					isOpen = false;
+				}
 			};
+
+			// Keep-alive heartbeat every 15 seconds to prevent proxy timeouts
+			const heartbeat = setInterval(() => {
+				if (isOpen) {
+					try {
+						controller.enqueue(encoder.encode(`: heartbeat\n\n`));
+					} catch {
+						isOpen = false;
+						clearInterval(heartbeat);
+					}
+				}
+			}, 15000);
 
 			let completed = 0;
 			const total = getTotalAttackCount();
@@ -198,9 +217,9 @@ export const GET: RequestHandler = async ({ url, request }) => {
 
 			const engine = new BreachEngine(
 				{
-					concurrency: 5,
-					attackTimeout: 10000,
-					delayBetweenAttacks: 30,
+					concurrency: 3, // Reduced from 5 to be gentler
+					attackTimeout: 8000, // Reduced from 10s
+					delayBetweenAttacks: 50, // Increased from 30ms
 					stopOnBreach: false
 				},
 				{
@@ -262,6 +281,8 @@ export const GET: RequestHandler = async ({ url, request }) => {
 					message: error instanceof Error ? error.message : 'Scan failed'
 				});
 			} finally {
+				clearInterval(heartbeat);
+				isOpen = false;
 				controller.close();
 			}
 		}
@@ -270,8 +291,10 @@ export const GET: RequestHandler = async ({ url, request }) => {
 	return new Response(stream, {
 		headers: {
 			'Content-Type': 'text/event-stream',
-			'Cache-Control': 'no-cache',
-			'Connection': 'keep-alive'
+			'Cache-Control': 'no-cache, no-transform',
+			'Connection': 'keep-alive',
+			'X-Accel-Buffering': 'no', // Disable nginx buffering
+			'Content-Encoding': 'none' // Prevent compression which can delay streaming
 		}
 	});
 };
