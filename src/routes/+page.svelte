@@ -394,8 +394,8 @@
 									<ol class="list-decimal list-inside space-y-1 text-gray-400">
 										<li>Go to <span class="text-white">supabase.com/dashboard</span></li>
 										<li>Select your project</li>
-										<li>Click <span class="text-white">Settings</span> → <span class="text-white">API</span></li>
-										<li>Copy the <span class="text-white">Project URL</span></li>
+										<li>Click <span class="text-white">Settings</span> → <span class="text-white">General</span></li>
+										<li>First section shows <span class="text-white">Project URL</span></li>
 									</ol>
 									<p class="mt-2 text-gray-500">Format: https://xxxxx.supabase.co</p>
 								</div>
@@ -429,7 +429,8 @@
 										<ol class="list-decimal list-inside space-y-1 text-gray-400">
 											<li>Go to <span class="text-white">supabase.com/dashboard</span></li>
 											<li>Select your project</li>
-											<li>Click <span class="text-white">Settings</span> → <span class="text-white">API</span></li>
+											<li>Click <span class="text-white">Settings</span> → <span class="text-white">API Keys</span></li>
+											<li>Scroll to <span class="text-white">Legacy</span> section</li>
 											<li>Copy <span class="text-white">anon public</span> key</li>
 										</ol>
 										<p class="mt-2 text-gray-500">Starts with: eyJhbGciOiJIUzI1...</p>
