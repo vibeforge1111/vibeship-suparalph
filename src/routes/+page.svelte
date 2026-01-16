@@ -118,6 +118,18 @@
 	async function startScan() {
 		if (!scanUrl) return;
 
+		// Validate URL format - must be a proper URL with protocol
+		try {
+			const url = new URL(scanUrl);
+			if (!['http:', 'https:'].includes(url.protocol)) {
+				scanError = 'Please enter a valid URL starting with http:// or https://';
+				return;
+			}
+		} catch {
+			scanError = 'Please enter a valid Supabase project URL (e.g., https://xyz.supabase.co)';
+			return;
+		}
+
 		isScanning = true;
 		scanProgress = 0;
 		attacksFound = 0;
