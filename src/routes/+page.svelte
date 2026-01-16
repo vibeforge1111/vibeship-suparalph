@@ -324,7 +324,7 @@
 </svelte:head>
 
 <!-- Hero Section with Ralph Wiggum -->
-<div class="relative min-h-screen bg-surface-900 overflow-hidden">
+<div class="relative min-h-screen bg-surface-900 overflow-x-hidden">
 	<!-- Animated Background Grid - Supabase Green -->
 	<div class="absolute inset-0 opacity-20">
 		<div class="absolute inset-0" style="background-image: linear-gradient(rgba(62, 207, 142, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(62, 207, 142, 0.1) 1px, transparent 1px); background-size: 50px 50px;"></div>
@@ -396,17 +396,18 @@
 	</div>
 
 	<!-- Main Hero Content -->
-	<div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4">
+	<div class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-8">
+
+		<!-- Title - in normal flow, not absolute -->
+		<div class="text-center mb-10 md:mb-14">
+			<h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight">
+				<span class="text-supa-400">Supa</span><span class="text-white">Ralph</span>
+			</h1>
+			<p class="text-xs md:text-sm text-gray-400 mt-2 font-mono">Supabase Penetration Testing</p>
+		</div>
 
 		<!-- Ralph Wiggum Image with Effects -->
 		<div class="relative mb-8">
-			<!-- Title ABOVE the image -->
-			<div class="absolute -top-32 left-1/2 -translate-x-1/2 text-center whitespace-nowrap z-20">
-				<h1 class="text-4xl md:text-5xl font-bold tracking-tight">
-					<span class="text-supa-400">Supa</span><span class="text-white">Ralph</span>
-				</h1>
-				<p class="text-xs md:text-sm text-gray-400 mt-1 font-mono">Supabase Penetration Testing</p>
-			</div>
 
 			<!-- Animated Laser Border Frame -->
 			<div class="absolute -inset-4 border-2 border-breach-500 animate-danger-pulse"></div>
@@ -423,7 +424,7 @@
 				<img
 					src="/ralph-wiggum.avif"
 					alt="Ralph Wiggum - I'm in danger!"
-					class="w-64 h-64 md:w-80 md:h-80 object-cover shadow-2xl transition-transform duration-300 group-hover:scale-105"
+					class="w-48 h-48 sm:w-64 sm:h-64 md:w-80 md:h-80 object-cover shadow-2xl transition-transform duration-300 group-hover:scale-105"
 				/>
 
 				<!-- Glitch Overlay on Hover -->
@@ -475,18 +476,18 @@
 								</div>
 							</div>
 						</div>
-						<div class="flex gap-3 mb-3">
+						<div class="flex flex-col sm:flex-row gap-3 mb-3">
 							<input
 								type="text"
 								bind:value={scanUrl}
 								placeholder="https://your-project.supabase.co"
 								disabled={isScanning}
-								class="flex-1 bg-surface-900 border border-gray-700 px-4 py-3 text-white font-mono focus:border-supa-500 focus:outline-none transition-colors disabled:opacity-50"
+								class="flex-1 bg-surface-900 border border-gray-700 px-4 py-3 text-white font-mono text-sm sm:text-base focus:border-supa-500 focus:outline-none transition-colors disabled:opacity-50"
 							/>
 							<button
 								onclick={startScan}
 								disabled={!scanUrl || isScanning}
-								class="px-6 py-3 bg-breach-600 hover:bg-breach-500 disabled:bg-breach-900 disabled:text-breach-400 disabled:cursor-not-allowed text-white font-bold transition-all hover:shadow-lg hover:shadow-breach-500/30 border border-breach-500 disabled:border-breach-700"
+								class="px-6 py-3 bg-breach-600 hover:bg-breach-500 disabled:bg-breach-900 disabled:text-breach-400 disabled:cursor-not-allowed text-white font-bold transition-all hover:shadow-lg hover:shadow-breach-500/30 border border-breach-500 disabled:border-breach-700 whitespace-nowrap"
 							>
 								{isScanning ? 'SCANNING...' : 'BREACH TEST'}
 							</button>
@@ -530,13 +531,16 @@
 				</div>
 			</div>
 
-		<!-- Secondary Links -->
-		<div class="flex gap-6 mt-6 text-sm {showContent ? 'animate-fade-in' : 'opacity-0'}" style="animation-delay: 0.7s;">
-			<a href="https://github.com/vibeforge1111/vibeship-suparalph" target="_blank" class="text-gray-500 hover:text-white transition-colors">
-				GitHub
-			</a>
+		<!-- Vibe Coder Message -->
+		<div class="text-center mt-6 max-w-lg {showContent ? 'animate-fade-in' : 'opacity-0'}" style="animation-delay: 0.6s;">
+			<p class="text-sm text-gray-400">
+				<span class="text-supa-400 font-semibold">Built for vibe coders.</span> LLMs ship fast but miss security holes.
+				<br class="hidden sm:block" />
+				Need more scans besides Supabase? <a href="https://scanner.vibeship.co" target="_blank" class="text-supa-400 hover:text-supa-300 underline">scanner.vibeship.co</a> scans <span class="text-white">3,500+ rulesets</span> with <span class="text-white">16 scanners</span>, that's free too.
+			</p>
 		</div>
-	</div>
+
+			</div>
 </div>
 
 <!-- Attack Categories Section -->
@@ -818,7 +822,16 @@
 			<div class="flex flex-wrap items-center justify-center gap-6 text-sm">
 				<a href="/terms" class="text-gray-400 hover:text-supa-400 transition-colors">Terms of Service</a>
 				<a href="/privacy" class="text-gray-400 hover:text-supa-400 transition-colors">Privacy Policy</a>
-				<a href="https://github.com/vibeforge1111/vibeship-suparalph" target="_blank" class="text-gray-400 hover:text-white transition-colors">GitHub</a>
+				<a
+					href="https://github.com/vibeforge1111/vibeship-suparalph"
+					target="_blank"
+					class="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+				>
+					<svg class="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 24 24">
+						<path d="M12 .587l3.668 7.568 8.332 1.151-6.064 5.828 1.48 8.279-7.416-3.967-7.417 3.967 1.481-8.279-6.064-5.828 8.332-1.151z"/>
+					</svg>
+					<span>Star on GitHub</span>
+				</a>
 			</div>
 		</div>
 
@@ -826,6 +839,9 @@
 		<div class="mt-8 pt-6 border-t border-gray-800 text-center">
 			<p class="text-xs text-gray-600">
 				© {new Date().getFullYear()} SupaRalph. Open source under MIT License.
+			</p>
+			<p class="text-xs text-gray-500 mt-2">
+				Part of the <a href="https://vibeship.co" target="_blank" class="text-supa-400 hover:text-supa-300">Vibeship</a> ecosystem — tools built for vibe coders.
 			</p>
 		</div>
 	</div>
